@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--      Colores de Tailwind      -->
+    <!--  Gray  -->
+    <color name="gray_50">#f9fafb</color>
+    <color name="gray_100">#f3f4f6</color>
+    <color name="gray_200">#e5e7eb</color>
+    <color name="gray_300">#d1d5db</color>
+    <color name="gray_400">#9ca3af</color>
+    <color name="gray_500">#6b7280</color>
+    <color name="gray_600">#4b5563</color>
+    <color name="gray_700">#374151</color>
+    <color name="gray_800">#1f2937</color>
+    <color name="gray_900">#111827</color>
+    <color name="gray_950">#030712</color>
+    <!--  Violet  -->
+    <color name="violet_50">#f5f3ff</color>
+    <color name="violet_100">#ede9fe</color>
+    <color name="violet_200">#ddd6fe</color>
+    <color name="violet_300">#c4b5fd</color>
+    <color name="violet_400">#a78bfa</color>
+    <color name="violet_500">#8b5cf6</color>
+    <color name="violet_600">#7c3aed</color>
+    <color name="violet_700">#6d28d9</color>
+    <color name="violet_800">#5b21b6</color>
+    <color name="violet_900">#4c1d95</color>
+    <color name="violet_950">#2e1065</color>
+
+</resources>
