@@ -14,12 +14,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initUI()
+        // binding.btnAccounts.setOnClickListener { navigateToAccounts() }
+//        binding.btnCategories.setOnClickListener { navigateToCategories() }
+    }
+
+    private fun initUI() {
         supportFragmentManager.beginTransaction()
             .add(R.id.fcMain, SignInFragment.newInstance())
             .commit()
-
-        // binding.btnAccounts.setOnClickListener { navigateToAccounts() }
-//        binding.btnCategories.setOnClickListener { navigateToCategories() }
     }
 
 //    override fun onBackPressed() {

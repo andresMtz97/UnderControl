@@ -14,7 +14,8 @@ class EditCategoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditCategoryBinding
     var category = Category("", null)
     private var isEdit = false
-    private var position = DataProvider.categories.size
+    private var position: Int = 0
+    private var initialType: TransactionType? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,8 @@ class EditCategoryActivity : AppCompatActivity() {
             isEdit = true
             position = intent.getIntExtra("EXTRA_EDIT_INDEX", 0)
             supportActionBar?.title = getString(R.string.edit_category)
-            category = DataProvider.categories[position]
+            category = DataProvider.actualUser!!.categories[position]
+            initialType = category.type
             binding.etCategoryName.setText(category.name)
             when(category.type) {
                 TransactionType.EXPENSE -> binding.rgCategoryType.check(binding.rbExpense.id)
@@ -53,16 +55,41 @@ class EditCategoryActivity : AppCompatActivity() {
     private fun saveCategory() {
         if (category.isValid()) {
             val resultIntent = Intent()
-            var nameExtra = "EXTRA_NOTIFY_INSERT"
-            val valueExtra: Int
             if (isEdit) {
-                valueExtra = position
-                nameExtra = "EXTRA_NOTIFY_CHANGE"
+                if (category.type != initialType) {
+                    if (category.type == TransactionType.INCOME) {
+                        DataProvider.actualUser!!.expenseCategories.removeAt(position)
+                        DataProvider.actualUser!!.incomeCategories.add(category)
+                        resultIntent.putExtra("EXTRA_NOTIFY_DELETE_EXPENSE", position)
+                        resultIntent.putExtra("EXTRA_NOTIFY_INSERT_INCOME", position)
+                    } else {
+                        DataProvider.actualUser!!.incomeCategories.removeAt(position)
+                        DataProvider.actualUser!!.expenseCategories.add(category)
+                        resultIntent.putExtra("EXTRA_NOTIFY_DELETE_INCOME", position)
+                        resultIntent.putExtra("EXTRA_NOTIFY_INSERT_EXPENSE", position)
+                    }
+                } else {
+                    if (category.type == TransactionType.INCOME) {
+                        resultIntent.putExtra("EXTRA_NOTIFY_CHANGE_INCOME", position)
+                    } else {
+                        resultIntent.putExtra("EXTRA_NOTIFY_CHANGE_EXPENSE", position)
+                    }
+                }
             } else {
-                DataProvider.categories.add(category)
-                valueExtra = DataProvider.categories.size - 1
+                if (category.type == TransactionType.INCOME) {
+                    DataProvider.actualUser!!.incomeCategories.add(category)
+                    resultIntent.putExtra(
+                        "EXTRA_NOTIFY_INSERT_INCOME",
+                        DataProvider.actualUser!!.incomeCategories.size - 1
+                    )
+                } else {
+                    DataProvider.actualUser!!.expenseCategories.add(category)
+                    resultIntent.putExtra(
+                        "EXTRA_NOTIFY_INSERT_EXPENSE",
+                        DataProvider.actualUser!!.expenseCategories.size - 1
+                    )
+                }
             }
-            resultIntent.putExtra(nameExtra, valueExtra)
             setResult(RESULT_OK, resultIntent)
             finish()
         }

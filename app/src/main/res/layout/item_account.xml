@@ -30,11 +30,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/llActions"
                 app:layout_constraintStart_toEndOf="@+id/ivAccountIcon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Texto de prueba" />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/tvAccountName"
+                app:layout_constraintStart_toEndOf="@id/ivAccountIcon"
+                app:layout_constraintEnd_toStartOf="@id/llActions"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="16sp"
+                tools:text="0.0"
+                android:paddingHorizontal="16dp"
+                android:id="@+id/tvAccountBalance"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
 
             <LinearLayout
                 android:id="@+id/llActions"
@@ -47,20 +58,18 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    app:tint="@android:color/holo_blue_dark"
-                    android:contentDescription="@string/ib_edit_description"
-                    android:src="@drawable/ic_edit" />
-
-                <ImageButton
+                    android:id="@+id/ibEdit"
+                    style="@style/ImageButtonEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:contentDescription="@string/ib_delete_description"
-                    android:src="@drawable/ic_trash"
-                    app:tint="@android:color/holo_red_dark" />
+                    android:contentDescription="@string/ib_delete_description" />
+
+                <ImageButton
+                    android:id="@+id/ibDelete"
+                    style="@style/ImageButtonDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/ib_edit_description" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

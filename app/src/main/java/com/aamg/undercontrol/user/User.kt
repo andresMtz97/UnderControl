@@ -9,6 +9,8 @@ data class User(
     var userName: String,
     var password: String,
 ) {
-    val categories: ArrayList<Category> = arrayListOf()
+    val categories: List<Category> get(): List<Category> = incomeCategories + expenseCategories
     val accounts: ArrayList<Account> = arrayListOf()
+    val incomeCategories: ArrayList<Category> = arrayListOf()
+    val expenseCategories: ArrayList<Category> = arrayListOf()
 }

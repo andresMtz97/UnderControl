@@ -16,7 +16,8 @@ class CategoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCategoryBinding
     private var menu: Menu? = null
-    private lateinit var adapter: CategoryAdapter
+    private lateinit var incomeAdapter: CategoryAdapter
+    private lateinit var expenseAdapter: CategoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +38,21 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        adapter = CategoryAdapter(
-            DataProvider.categories,
-            { index -> onItemDeleted(index) },
+        incomeAdapter = CategoryAdapter(
+            DataProvider.actualUser!!.incomeCategories,
+            { index -> onItemIncomeDeleted(index) },
             { index -> onItemEdited(index) }
         )
-        binding.rvCategories.layoutManager = LinearLayoutManager(this)
-        binding.rvCategories.adapter = adapter
+        binding.rvIncomeCategories.layoutManager = LinearLayoutManager(this)
+        binding.rvIncomeCategories.adapter = incomeAdapter
+
+        expenseAdapter = CategoryAdapter(
+            DataProvider.actualUser!!.expenseCategories,
+            { index -> onItemExpenseDeleted(index) },
+            { index -> onItemEdited(index) }
+        )
+        binding.rvExpenseCategories.layoutManager = LinearLayoutManager(this)
+        binding.rvExpenseCategories.adapter = expenseAdapter
     }
 
     private fun onItemEdited(index: Int) {
@@ -53,9 +62,14 @@ class CategoryActivity : AppCompatActivity() {
         launchActivityResult.launch(intent)
     }
 
-    private fun onItemDeleted(index: Int) {
-        DataProvider.categories.removeAt(index)
-        adapter.notifyItemRemoved(index)
+    private fun onItemIncomeDeleted(index: Int) {
+        DataProvider.actualUser!!.incomeCategories.removeAt(index)
+        incomeAdapter.notifyItemRemoved(index)
+    }
+
+    private fun onItemExpenseDeleted(index: Int) {
+        DataProvider.actualUser!!.expenseCategories.removeAt(index)
+        expenseAdapter.notifyItemRemoved(index)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -90,15 +104,33 @@ class CategoryActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            if (result.data?.hasExtra("EXTRA_NOTIFY_INSERT") == true) {
+            if (result.data?.hasExtra("EXTRA_NOTIFY_INSERT_INCOME") == true) {
                 result.data?.getIntExtra(
-                    "EXTRA_NOTIFY_INSERT",
-                    DataProvider.categories.size -1
-                )?.let { adapter.notifyItemInserted(it) }
+                    "EXTRA_NOTIFY_INSERT_INCOME",
+                    DataProvider.actualUser!!.incomeCategories.size -1
+                )?.let { incomeAdapter.notifyItemInserted(it) }
             }
-            if (result.data?.hasExtra("EXTRA_NOTIFY_CHANGE") == true) {
-                result.data?.getIntExtra("EXTRA_NOTIFY_CHANGE", 0)
-                    ?.let { adapter.notifyItemChanged(it) }
+            if (result.data?.hasExtra("EXTRA_NOTIFY_INSERT_EXPENSE") == true) {
+                result.data?.getIntExtra(
+                    "EXTRA_NOTIFY_INSERT_EXPENSE",
+                    DataProvider.actualUser!!.expenseCategories.size -1
+                )?.let { expenseAdapter.notifyItemInserted(it) }
+            }
+            if (result.data?.hasExtra("EXTRA_NOTIFY_DELETE_INCOME") == true){
+                result.data?.getIntExtra("EXTRA_NOTIFY_DELETE_INCOME", 0)
+                    ?.let { incomeAdapter.notifyItemRemoved(it) }
+            }
+            if (result.data?.hasExtra("EXTRA_NOTIFY_DELETE_EXPENSE") == true){
+                result.data?.getIntExtra("EXTRA_NOTIFY_DELETE_EXPENSE", 0)
+                    ?.let { expenseAdapter.notifyItemRemoved(it) }
+            }
+            if (result.data?.hasExtra("EXTRA_NOTIFY_CHANGE_INCOME") == true) {
+                result.data?.getIntExtra("EXTRA_NOTIFY_CHANGE_INCOME", 0)
+                    ?.let { incomeAdapter.notifyItemChanged(it) }
+            }
+            if (result.data?.hasExtra("EXTRA_NOTIFY_CHANGE_EXPENSE") == true) {
+                result.data?.getIntExtra("EXTRA_NOTIFY_CHANGE_EXPENSE", 0)
+                    ?.let { expenseAdapter.notifyItemChanged(it) }
             }
         }
     }

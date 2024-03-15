@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="32dp"
+        android:contentDescription="@string/sign_in_text"
         android:src="@drawable/ic_user_circle"
         app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
 
@@ -42,13 +43,15 @@
             android:text="@string/username" />
 
         <EditText
-            android:id="@+id/etEmail"
+            android:id="@+id/etUserName"
             style="@style/EditTextForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="username"
             android:drawableStart="@drawable/ic_user"
             android:drawablePadding="8dp"
-            android:hint="@string/username" />
+            android:hint="@string/username"
+            android:inputType="text" />
 
         <TextView
             style="@style/TextViewForm"
@@ -61,16 +64,19 @@
             style="@style/EditTextForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="password"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="8dp"
             android:hint="@string/password"
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/btnSend"
+            android:id="@+id/btnSignIn"
             style="@style/ButtonSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="false"
             android:text="@string/sign_in_text" />
     </LinearLayout>
 
