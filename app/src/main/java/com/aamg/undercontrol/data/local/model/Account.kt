@@ -1,4 +1,4 @@
-package com.aamg.undercontrol.account
+package com.aamg.undercontrol.data.local.model
 
 data class Account(
     var name: String

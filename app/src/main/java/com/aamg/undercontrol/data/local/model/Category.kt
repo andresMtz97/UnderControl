@@ -1,4 +1,4 @@
-package com.aamg.undercontrol.category
+package com.aamg.undercontrol.data.local.model
 
 data class Category(
     var name: String,

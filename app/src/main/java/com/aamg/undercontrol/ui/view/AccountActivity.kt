@@ -1,4 +1,4 @@
-package com.aamg.undercontrol.account
+package com.aamg.undercontrol.ui.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +7,9 @@ import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.aamg.undercontrol.DataProvider
+import com.aamg.undercontrol.data.local.DataProvider
 import com.aamg.undercontrol.R
-import com.aamg.undercontrol.account.adapter.AccountAdapter
-import com.aamg.undercontrol.category.EditCategoryActivity
+import com.aamg.undercontrol.ui.view.adapters.account.AccountAdapter
 import com.aamg.undercontrol.databinding.ActivityAccountBinding
 
 class AccountActivity : AppCompatActivity() {

@@ -1,10 +1,10 @@
-package com.aamg.undercontrol.category.adapter
+package com.aamg.undercontrol.ui.view.adapters.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.aamg.undercontrol.R
-import com.aamg.undercontrol.category.Category
+import com.aamg.undercontrol.data.local.model.Category
 
 class CategoryAdapter(
     private val categories: ArrayList<Category>,

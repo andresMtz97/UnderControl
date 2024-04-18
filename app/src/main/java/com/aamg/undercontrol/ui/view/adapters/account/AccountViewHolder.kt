@@ -1,8 +1,8 @@
-package com.aamg.undercontrol.account.adapter
+package com.aamg.undercontrol.ui.view.adapters.account
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.aamg.undercontrol.account.Account
+import com.aamg.undercontrol.data.local.model.Account
 import com.aamg.undercontrol.databinding.ItemAccountBinding
 import java.text.NumberFormat
 import java.util.Locale

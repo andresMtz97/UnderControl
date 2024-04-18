@@ -1,7 +1,4 @@
-package com.aamg.undercontrol.user
-
-import com.aamg.undercontrol.account.Account
-import com.aamg.undercontrol.category.Category
+package com.aamg.undercontrol.data.local.model
 
 data class User(
     var firstName: String,

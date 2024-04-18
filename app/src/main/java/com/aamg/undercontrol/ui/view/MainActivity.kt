@@ -1,9 +1,10 @@
-package com.aamg.undercontrol
+package com.aamg.undercontrol.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.aamg.undercontrol.R
 import com.aamg.undercontrol.databinding.ActivityMainBinding
-import com.aamg.undercontrol.user.SignInFragment
+import com.aamg.undercontrol.ui.view.fragments.SignInFragment
 
 class MainActivity : AppCompatActivity() {
 

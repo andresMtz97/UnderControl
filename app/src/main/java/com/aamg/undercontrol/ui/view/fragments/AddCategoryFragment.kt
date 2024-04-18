@@ -1,4 +1,4 @@
-package com.aamg.undercontrol.category
+package com.aamg.undercontrol.ui.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.aamg.undercontrol.R
+import com.aamg.undercontrol.data.local.model.Category
+import com.aamg.undercontrol.data.local.model.TransactionType
 import com.aamg.undercontrol.databinding.FragmentAddCategoryBinding
 
 class AddCategoryFragment : Fragment() {

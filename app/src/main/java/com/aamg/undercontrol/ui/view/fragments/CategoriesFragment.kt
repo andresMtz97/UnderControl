@@ -1,13 +1,10 @@
-package com.aamg.undercontrol.category
+package com.aamg.undercontrol.ui.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.aamg.undercontrol.DataProvider
-import com.aamg.undercontrol.category.adapter.CategoryAdapter
 import com.aamg.undercontrol.databinding.FragmentCategoriesBinding
 
 class CategoriesFragment : Fragment() {

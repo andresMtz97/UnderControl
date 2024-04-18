@@ -1,10 +1,10 @@
-package com.aamg.undercontrol.account.adapter
+package com.aamg.undercontrol.ui.view.adapters.account
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.aamg.undercontrol.R
-import com.aamg.undercontrol.account.Account
+import com.aamg.undercontrol.data.local.model.Account
 
 class AccountAdapter(
     private val accounts: ArrayList<Account>,

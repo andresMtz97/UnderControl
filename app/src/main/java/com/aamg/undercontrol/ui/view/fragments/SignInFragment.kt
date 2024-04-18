@@ -1,4 +1,4 @@
-package com.aamg.undercontrol.user
+package com.aamg.undercontrol.ui.view.fragments
 
 import android.content.Intent
 import android.graphics.Color
@@ -8,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import com.aamg.undercontrol.DataProvider
-import com.aamg.undercontrol.HomeActivity
+import com.aamg.undercontrol.data.local.DataProvider
+import com.aamg.undercontrol.ui.view.HomeActivity
 import com.aamg.undercontrol.R
 import com.aamg.undercontrol.databinding.FragmentSignInBinding
 import com.google.android.material.snackbar.Snackbar

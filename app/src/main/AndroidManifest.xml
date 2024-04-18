@@ -13,22 +13,22 @@
         android:theme="@style/Theme.UnderControl"
         tools:targetApi="31">
         <activity
-            android:name=".account.AccountActivity"
+            android:name=".ui.view.AccountActivity"
             android:exported="false" />
         <activity
-            android:name=".account.EditAccountActivity"
+            android:name=".ui.view.EditAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.view.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".category.EditCategoryActivity"
+            android:name=".ui.view.EditCategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".category.CategoryActivity"
+            android:name=".ui.view.CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

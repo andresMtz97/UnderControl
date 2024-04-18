@@ -1,12 +1,14 @@
-package com.aamg.undercontrol.category
+package com.aamg.undercontrol.ui.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.widget.addTextChangedListener
-import com.aamg.undercontrol.DataProvider
+import com.aamg.undercontrol.data.local.DataProvider
 import com.aamg.undercontrol.R
+import com.aamg.undercontrol.data.local.model.Category
+import com.aamg.undercontrol.data.local.model.TransactionType
 import com.aamg.undercontrol.databinding.ActivityEditCategoryBinding
 
 class EditCategoryActivity : AppCompatActivity() {

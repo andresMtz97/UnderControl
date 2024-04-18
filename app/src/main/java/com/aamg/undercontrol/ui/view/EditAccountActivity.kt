@@ -1,13 +1,12 @@
-package com.aamg.undercontrol.account
+package com.aamg.undercontrol.ui.view
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
-import com.aamg.undercontrol.DataProvider
+import com.aamg.undercontrol.data.local.DataProvider
 import com.aamg.undercontrol.R
+import com.aamg.undercontrol.data.local.model.Account
 import com.aamg.undercontrol.databinding.ActivityEditAccountBinding
 
 class EditAccountActivity : AppCompatActivity() {

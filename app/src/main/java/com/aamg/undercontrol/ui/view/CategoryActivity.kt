@@ -1,4 +1,4 @@
-package com.aamg.undercontrol.category
+package com.aamg.undercontrol.ui.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,9 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.aamg.undercontrol.DataProvider
+import com.aamg.undercontrol.data.local.DataProvider
 import com.aamg.undercontrol.R
-import com.aamg.undercontrol.category.adapter.CategoryAdapter
+import com.aamg.undercontrol.ui.view.adapters.category.CategoryAdapter
 import com.aamg.undercontrol.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {

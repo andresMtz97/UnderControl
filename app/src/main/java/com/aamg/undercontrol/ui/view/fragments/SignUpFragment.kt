@@ -1,4 +1,4 @@
-package com.aamg.undercontrol.user
+package com.aamg.undercontrol.ui.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import com.aamg.undercontrol.DataProvider
-import com.aamg.undercontrol.HomeActivity
+import com.aamg.undercontrol.data.local.DataProvider
+import com.aamg.undercontrol.ui.view.HomeActivity
 import com.aamg.undercontrol.R
 import com.aamg.undercontrol.databinding.FragmentSignUpBinding
+import com.aamg.undercontrol.data.local.model.User
 
 class SignUpFragment : Fragment() {
 

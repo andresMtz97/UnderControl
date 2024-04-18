@@ -1,7 +1,7 @@
-package com.aamg.undercontrol
+package com.aamg.undercontrol.data.local
 
-import com.aamg.undercontrol.category.Category
-import com.aamg.undercontrol.user.User
+import com.aamg.undercontrol.data.local.model.Category
+import com.aamg.undercontrol.data.local.model.User
 
 class DataProvider {
     companion object {
