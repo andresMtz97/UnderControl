@@ -1,28 +1,34 @@
 package com.aamg.undercontrol.ui.view.fragments
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import com.aamg.undercontrol.data.local.DataProvider
-import com.aamg.undercontrol.ui.view.HomeActivity
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.aamg.undercontrol.R
+import com.aamg.undercontrol.data.remote.model.User
 import com.aamg.undercontrol.databinding.FragmentSignUpBinding
-import com.aamg.undercontrol.data.local.model.User
+import com.aamg.undercontrol.ui.viewmodel.SignUp
+import com.aamg.undercontrol.utils.showErrorDialog
+import com.google.android.material.snackbar.Snackbar
 
 class SignUpFragment : Fragment() {
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
 
-    private var firstName = ""
-    private var lastName = ""
-    private var userName = ""
-    private var password = ""
+    private val viewModel: SignUp by viewModels()
+
+//    private var user = User(null,"", "", "", "")
+
+//    private var firstName = ""
+//    private var lastName = ""
+//    private var userName = ""
+//    private var password = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,60 +44,48 @@ class SignUpFragment : Fragment() {
     }
 
     private fun initUI() {
+        Log.i("BTN_ENABLED", validateForm().toString())
+        binding.btnSubmit.isEnabled = validateForm()
         initListeners()
+        initObservers()
     }
 
     private fun initListeners() {
-        binding.etFirstName.addTextChangedListener { firstName = it.toString() }
-        binding.etLastName.addTextChangedListener { lastName = it.toString() }
-        binding.etUserName.addTextChangedListener { userName = it.toString() }
-        binding.etPassword.addTextChangedListener { password = it.toString() }
-        binding.btnSubmit.setOnClickListener { navigateToHome() }
+        binding.etFirstName.addTextChangedListener { binding.btnSubmit.isEnabled = validateForm() }
+        binding.etLastName.addTextChangedListener { binding.btnSubmit.isEnabled = validateForm() }
+        binding.etUserName.addTextChangedListener { binding.btnSubmit.isEnabled = validateForm() }
+        binding.etPassword.addTextChangedListener { binding.btnSubmit.isEnabled = validateForm() }
+        binding.btnSubmit.setOnClickListener { sendData() } //viewModel.signUp(user)
     }
 
-    private fun navigateToHome() {
-        if (validateForm()) {
-            DataProvider.users[userName] = User(firstName, lastName, userName, password)
-            DataProvider.actualUser = DataProvider.users[userName]
+    private fun initObservers() {
+        viewModel.successMsg.observe(viewLifecycleOwner) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+        }
 
-//            val bundle = Bundle().apply {
-//                putString("name", name)
-//                putString("lastname", lastname)
-//                putString("email", email)
-//                putString("password", password)
-//                putString("gender", gender)
-//            }
-            activity?.finish()
-            val intent = Intent(requireContext(), HomeActivity::class.java)
-            startActivity(intent)
-        } else {
-            Toast.makeText(requireContext(), "Errores en formulario", Toast.LENGTH_SHORT).show()
+        viewModel.errors.observe(viewLifecycleOwner) { validationErrors ->
+            var message = ""
+            validationErrors.forEach { validationError ->
+                message += validationError.messages.joinToString("\n")
+                message += "\n"
+            }
+            showErrorDialog(requireContext(), message)
         }
     }
 
-    private fun validateForm(): Boolean {
-        var isValid = true
-
-        if (firstName.isBlank()) {
-            isValid = false
-            binding.etFirstName.error = getString(R.string.required)
-        }
-        if (lastName.isBlank()) {
-            isValid = false
-            binding.etLastName.error = getString(R.string.required)
-        }
-        if (userName.isBlank()) {
-            isValid = false
-            binding.etUserName.error = getString(R.string.required)
-        }
-        if (password.isBlank()) {
-            isValid = false
-            binding.etPassword.error = getString(R.string.required)
-        }
-        return isValid
+    private fun sendData() {
+        val user = User(
+            name = binding.etFirstName.text.toString(),
+            lastName = binding.etLastName.text.toString(),
+            username = binding.etUserName.text.toString(),
+            password = binding.etPassword.text.toString()
+        )
+        viewModel.signUp(user)
     }
 
-    companion object {
-        fun newInstance() = SignUpFragment()
-    }
+    private fun validateForm(): Boolean = binding.etFirstName.text.isNotBlank() &&
+            binding.etLastName.text.isNotBlank() &&
+            binding.etUserName.text.isNotBlank() &&
+            binding.etPassword.text.isNotBlank()
 }

@@ -1,16 +1,15 @@
 package com.aamg.undercontrol.ui.view.fragments
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import com.aamg.undercontrol.data.local.DataProvider
-import com.aamg.undercontrol.ui.view.HomeActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.aamg.undercontrol.R
+import com.aamg.undercontrol.data.local.DataProvider
 import com.aamg.undercontrol.databinding.FragmentSignInBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -56,16 +55,17 @@ class SignInFragment : Fragment() {
     }
 
     private fun navigateToHome() {
-        activity?.finish()
-        val intent = Intent(requireContext(), HomeActivity::class.java)
-        startActivity(intent)
+//        activity?.finish()
+//        val intent = Intent(requireContext(), HomeActivity::class.java)
+//        startActivity(intent)
     }
 
     private fun showSignUp() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fcMain, SignUpFragment.newInstance())
-            .addToBackStack("SignUpFragment")
-            .commit()
+        findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+//        parentFragmentManager.beginTransaction()
+//            .replace(R.id.fcMain, SignUpFragment.newInstance())
+//            .addToBackStack("SignUpFragment")
+//            .commit()
     }
 
     private fun validateForm(): Boolean {
@@ -92,9 +92,5 @@ class SignInFragment : Fragment() {
             snackbar.show()
         }
         return isValid
-    }
-
-    companion object {
-        fun newInstance() = SignInFragment()
     }
 }
