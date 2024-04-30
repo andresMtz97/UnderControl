@@ -30,4 +30,6 @@
     <string name="save_text">Guardar</string>
     <string name="edit_account">Editar Cuenta</string>
     <string name="add_account">Registrar Cuenta</string>
+    <string name="home">Inicio</string>
+    <string name="welcome">Bienvenido(a) %s</string>
 </resources>

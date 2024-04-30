@@ -4,8 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 data class User(
     @SerializedName("usuario_id") val id: Long? = null,
-    @SerializedName("nombre") var name: String,
-    @SerializedName("ap_paterno") var lastName: String,
+    @SerializedName("nombre") var name: String?,
+    @SerializedName("ap_paterno") var lastName: String?,
     @SerializedName("username") var username: String,
-    var password: String? = null
+    var password: String? = null,
+    @SerializedName("token") val token: String? = null
+)
+
+data class SignInData(
+    @SerializedName("username") val username: String,
+    @SerializedName("password") val password: String
 )

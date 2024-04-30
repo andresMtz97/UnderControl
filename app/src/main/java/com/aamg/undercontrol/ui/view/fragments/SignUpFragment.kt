@@ -88,4 +88,9 @@ class SignUpFragment : Fragment() {
             binding.etLastName.text.isNotBlank() &&
             binding.etUserName.text.isNotBlank() &&
             binding.etPassword.text.isNotBlank()
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

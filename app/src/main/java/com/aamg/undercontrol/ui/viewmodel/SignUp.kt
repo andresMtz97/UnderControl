@@ -61,7 +61,7 @@ class SignUp : ViewModel() {
                 }
 
                 override fun onFailure(p0: Call<ApiResponse>, t: Throwable) {
-                    Log.e("API_RESPONSE", t.message.toString())
+                    Log.e("SIGN_UP_FAILURE", t.message.toString())
                 }
             })
         }

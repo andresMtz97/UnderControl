@@ -3,6 +3,7 @@ package com.aamg.undercontrol.data
 import com.aamg.undercontrol.data.remote.RetrofitHelper
 import com.aamg.undercontrol.data.remote.UnderControlApi
 import com.aamg.undercontrol.data.remote.model.ApiResponse
+import com.aamg.undercontrol.data.remote.model.SignInData
 import com.aamg.undercontrol.data.remote.model.User
 import retrofit2.Call
 
@@ -11,6 +12,8 @@ class UnderControlRepository {
     private val api = retrofit.create(UnderControlApi::class.java)
 
     fun signUp(user: User): Call<ApiResponse> = api.signUp(user)
+
+    fun signIn(data: SignInData): Call<User> = api.signIn(data)
 
     companion object {
         @Volatile

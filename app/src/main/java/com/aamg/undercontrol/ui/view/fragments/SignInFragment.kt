@@ -1,25 +1,25 @@
 package com.aamg.undercontrol.ui.view.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aamg.undercontrol.R
-import com.aamg.undercontrol.data.local.DataProvider
+import com.aamg.undercontrol.data.remote.model.SignInData
 import com.aamg.undercontrol.databinding.FragmentSignInBinding
-import com.google.android.material.snackbar.Snackbar
+import com.aamg.undercontrol.ui.viewmodel.SignIn
+import com.aamg.undercontrol.utils.showErrorDialog
 
 class SignInFragment : Fragment() {
 
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
 
-    private var userName = ""
-    private var password = ""
+    private val viewModel: SignIn by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,29 +35,36 @@ class SignInFragment : Fragment() {
     }
 
     private fun initUI() {
+        binding.btnSignIn.isEnabled = validateForm()
         initListeners()
+        initObservers()
     }
 
     private fun initListeners() {
-        binding.etUserName.addTextChangedListener { userName = it.toString() }
-        binding.etPassword.addTextChangedListener { password = it.toString() }
-        binding.btnSignIn.setOnClickListener { signIn() }
+        binding.etUserName.addTextChangedListener { binding.btnSignIn.isEnabled = validateForm() }
+        binding.etPassword.addTextChangedListener { binding.btnSignIn.isEnabled = validateForm() }
+        binding.btnSignIn.setOnClickListener { sendData() }
         binding.tvSignup.setOnClickListener { showSignUp() }
     }
 
-    private fun signIn() {
-        if (validateForm() && validateUser()) {
-            DataProvider.actualUser = DataProvider.users[userName]
-            navigateToHome()
+    private fun initObservers() {
+        viewModel.success.observe(viewLifecycleOwner) {success ->
+            if (success) {
+                findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+            }
         }
 
-//            DataProvider.users.containsKey()
+        viewModel.error.observe(viewLifecycleOwner) {
+            showErrorDialog(requireContext(), it)
+        }
     }
 
-    private fun navigateToHome() {
-//        activity?.finish()
-//        val intent = Intent(requireContext(), HomeActivity::class.java)
-//        startActivity(intent)
+    private fun sendData() {
+        val data = SignInData(
+            binding.etUserName.text.toString(),
+            binding.etPassword.text.toString()
+        )
+        viewModel.signIn(data)
     }
 
     private fun showSignUp() {
@@ -68,29 +75,11 @@ class SignInFragment : Fragment() {
 //            .commit()
     }
 
-    private fun validateForm(): Boolean {
-        var isValid = true
+    private fun validateForm(): Boolean = binding.etUserName.text.isNotBlank() &&
+            binding.etPassword.text.isNotBlank()
 
-        if (userName.isBlank()) {
-            isValid = false
-            binding.etUserName.error = getString(R.string.required)
-        }
-        if (password.isBlank()) {
-            isValid = false
-            binding.etPassword.error = getString(R.string.required)
-        }
-        return isValid
-    }
-
-    private fun validateUser(): Boolean {
-        var isValid = false
-        if (DataProvider.users.containsKey(userName) && DataProvider.users[userName]?.password == password){
-            isValid = true
-        } else {
-            val snackbar = Snackbar.make(binding.root, getString(R.string.signin_failed), Snackbar.LENGTH_LONG )
-            snackbar.setBackgroundTint(Color.RED)
-            snackbar.show()
-        }
-        return isValid
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
