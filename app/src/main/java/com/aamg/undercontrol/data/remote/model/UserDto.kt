@@ -2,7 +2,7 @@ package com.aamg.undercontrol.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class User(
+data class UserDto(
     @SerializedName("usuario_id") val id: Long? = null,
     @SerializedName("nombre") var name: String?,
     @SerializedName("ap_paterno") var lastName: String?,

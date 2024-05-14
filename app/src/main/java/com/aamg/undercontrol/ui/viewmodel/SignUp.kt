@@ -6,10 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aamg.undercontrol.data.UnderControlRepository
-import com.aamg.undercontrol.data.remote.model.ApiResponse
-import com.aamg.undercontrol.data.remote.model.User
+import com.aamg.undercontrol.data.remote.model.ResponseDto
+import com.aamg.undercontrol.data.remote.model.UserDto
 import com.aamg.undercontrol.data.remote.model.ValidationError
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,17 +27,17 @@ class SignUp : ViewModel() {
     private val _errors = MutableLiveData<ArrayList<ValidationError>>()
     val errors: LiveData<ArrayList<ValidationError>> = _errors
 
-    fun signUp(user: User) {
+    fun signUp(user: UserDto) {
         _isLoading.postValue(true)
         viewModelScope.launch {
             val call = repository.signUp(user)
 
-            call.enqueue(object : Callback<ApiResponse> {
+            call.enqueue(object : Callback<ResponseDto<UserDto>> {
                 override fun onResponse(
-                    p0: Call<ApiResponse>,
-                    response: retrofit2.Response<ApiResponse>
+                    p0: Call<ResponseDto<UserDto>>,
+                    response: retrofit2.Response<ResponseDto<UserDto>>
                 ) {
-                    val apiResponse: ApiResponse?
+                    val apiResponse: ResponseDto<UserDto>?
                     _isLoading.postValue(false)
 
                     // Response status 200
@@ -48,9 +49,9 @@ class SignUp : ViewModel() {
                     } else if (response.errorBody() != null) { // Response status 400
                         apiResponse = Gson().fromJson(
                             response.errorBody()!!.string(),
-                            ApiResponse::class.java
+                            object: TypeToken<ResponseDto<UserDto>>() {}.type
                         )
-                        apiResponse.errors?.let { errors ->
+                        apiResponse?.errors?.let { errors ->
                             if (errors.isNotEmpty()) {
                                 _errors.postValue(errors)
                             }
@@ -60,7 +61,7 @@ class SignUp : ViewModel() {
                     }
                 }
 
-                override fun onFailure(p0: Call<ApiResponse>, t: Throwable) {
+                override fun onFailure(p0: Call<ResponseDto<UserDto>>, t: Throwable) {
                     Log.e("SIGN_UP_FAILURE", t.message.toString())
                 }
             })

@@ -41,13 +41,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun navigateToCategories() {
-        val intent = Intent(this, CategoryActivity::class.java)
-        startActivity(intent)
+//        val intent = Intent(this, CategoryActivity::class.java)
+//        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 //        this.menu = menu
-        menuInflater.inflate(R.menu.menu_sign_out, menu)
+        menuInflater.inflate(R.menu.menu_action_bar, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

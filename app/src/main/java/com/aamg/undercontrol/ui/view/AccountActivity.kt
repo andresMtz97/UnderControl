@@ -68,16 +68,16 @@ class AccountActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            android.R.id.home -> { onBackPressed() }
-            R.id.btnAdd -> {
-                val intent = Intent(this, EditAccountActivity::class.java)
-                launchActivityResult.launch(intent)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when(item.itemId) {
+//            android.R.id.home -> { onBackPressed() }
+//            R.id.btnAdd -> {
+//                val intent = Intent(this, EditAccountActivity::class.java)
+//                launchActivityResult.launch(intent)
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private val launchActivityResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()

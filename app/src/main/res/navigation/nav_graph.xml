@@ -6,20 +6,6 @@
     app:startDestination="@id/signInFragment">
 
     <fragment
-        android:id="@+id/signInFragment"
-        android:name="com.aamg.undercontrol.ui.view.fragments.SignInFragment"
-        android:label="@string/sign_in_text"
-        tools:layout="@layout/fragment_sign_in">
-        <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/signInFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
         android:id="@+id/signUpFragment"
         android:name="com.aamg.undercontrol.ui.view.fragments.SignUpFragment"
         android:label="@string/sign_up_text"
@@ -31,8 +17,52 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.aamg.undercontrol.ui.view.fragments.HomeFragment"
-        android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/signInFragment"
+        android:name="com.aamg.undercontrol.ui.view.fragments.SignInFragment"
+        android:label="@string/sign_in_text"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_homeFragment"
+            app:destination="@id/homeNavigation"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <navigation android:id="@+id/homeNavigation"
+        app:startDestination="@id/homeFragment">
+        <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.aamg.undercontrol.ui.view.fragments.HomeFragment"
+            android:label="@string/home"
+            tools:layout="@layout/fragment_home" />
+        <action
+            android:id="@+id/action_global_signInFragment2"
+            app:destination="@id/signInFragment"
+            app:popUpTo="@id/homeNavigation"
+            app:popUpToInclusive="true" />
+    </navigation>
+    <navigation android:id="@+id/categoriesNavigation"
+        app:startDestination="@id/categoriesFragment">
+        <fragment
+            android:id="@+id/categoriesFragment"
+            android:name="com.aamg.undercontrol.ui.view.fragments.CategoriesFragment"
+            android:label="@string/categories_text"
+            tools:layout="@layout/fragment_categories" >
+        </fragment>
+        <action
+            android:id="@+id/action_global_signInFragment"
+            app:destination="@id/signInFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
+    </navigation>
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/accountsFragment">
+        <fragment
+            android:id="@+id/accountsFragment"
+            android:name="com.aamg.undercontrol.ui.view.fragments.AccountsFragment"
+            android:label="fragment_accounts"
+            tools:layout="@layout/fragment_accounts" />
+    </navigation>
 </navigation>

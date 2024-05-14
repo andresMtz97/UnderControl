@@ -1,34 +1,99 @@
 package com.aamg.undercontrol.ui.view.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.aamg.undercontrol.databinding.FragmentCategoriesBinding
+import com.aamg.undercontrol.ui.view.adapters.category.CategoryAdapter
+import com.aamg.undercontrol.ui.viewmodel.Categories
+import com.aamg.undercontrol.utils.showErrorDialog
 
 class CategoriesFragment : Fragment() {
 
-    private lateinit var binding: FragmentCategoriesBinding
+    private var _binding: FragmentCategoriesBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: Categories by viewModels()
+
+    private lateinit var incomeAdapter: CategoryAdapter
+    private lateinit var expenseAdapter: CategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.onCreate()
+        initUI()
 //        binding.rvCategories.adapter = CategoryAdapter(DataProvider.categories)
 //        binding.rvCategories.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = CategoriesFragment()
+    private fun initUI() {
+        initRV()
+        initListeners()
+        initObservers()
+    }
+
+    private fun initRV() {
+        incomeAdapter = CategoryAdapter(ArrayList(), {}, {})
+        binding.rvIncomeCategories.adapter = incomeAdapter
+        binding.rvIncomeCategories.layoutManager = LinearLayoutManager(requireContext())
+
+        expenseAdapter = CategoryAdapter(ArrayList(), {}, {})
+        binding.rvExpenseCategories.adapter = expenseAdapter
+        binding.rvExpenseCategories.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun initListeners() {
+        binding.fabAddCategory.setOnClickListener { displayAddCategory() }
+    }
+
+    private fun initObservers() {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            binding.pbLoading.visibility = View.GONE
+        }
+
+        viewModel.incomeCategories.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.tvIncomeNoData.visibility = View.VISIBLE
+            } else {
+                incomeAdapter.updateList(it)
+            }
+        }
+
+        viewModel.expenseCategories.observe(viewLifecycleOwner) {
+            binding.rvExpenseCategories.adapter = CategoryAdapter(it, {}, {})
+            if (it.isEmpty()) {
+                binding.tvExpenseNoData.visibility = View.VISIBLE
+            } else {
+                expenseAdapter.updateList(it)
+            }
+        }
+
+        viewModel.errors.observe(viewLifecycleOwner) { validationErrors ->
+            var message = ""
+            validationErrors.forEach { validationError ->
+                message += validationError.messages.joinToString("\n")
+                message += "\n"
+            }
+            showErrorDialog(requireContext(), message)
+        }
+    }
+
+    private fun displayAddCategory() {
+        val dialog = CategoryDialog { category -> viewModel.createCategory(category) }
+        dialog.show(parentFragmentManager, "addCategory")
     }
 }

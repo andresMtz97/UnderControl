@@ -32,4 +32,6 @@
     <string name="add_account">Registrar Cuenta</string>
     <string name="home">Inicio</string>
     <string name="welcome">Bienvenido(a) %s</string>
+    <string name="no_data">No hay registros.</string>
+    <string name="add">Agregar</string>
 </resources>

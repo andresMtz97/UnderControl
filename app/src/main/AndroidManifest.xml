@@ -28,9 +28,6 @@
             android:name=".ui.view.EditCategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.CategoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.view.MainActivity"
             android:exported="true">
             <intent-filter>

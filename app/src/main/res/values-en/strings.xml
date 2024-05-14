@@ -32,5 +32,7 @@
     <string name="add_account">Add Account</string>
     <string name="home">Home</string>
     <string name="welcome">Welcome %s</string>
+    <string name="no_data">No data found.</string>
+    <string name="add">Agregar</string>
 
 </resources>

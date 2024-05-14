@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.fragments.AddCategoryFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glTop"
@@ -44,6 +42,7 @@
     <EditText
         android:id="@+id/etCategoryName"
         style="@style/EditTextForm"
+        android:autofillHints="name"
         android:hint="@string/hint_category_name"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="@+id/glEnd"
@@ -60,10 +59,10 @@
 
     <RadioGroup
         android:id="@+id/rgCategoryType"
-        android:layout_marginTop="-10dp"
         style="@style/EditTextForm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
@@ -74,24 +73,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:textSize="18sp"
-            android:text="@string/income_text" />
+            android:text="@string/income_text"
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/rbExpense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
             android:layout_marginStart="20dp"
-            android:text="@string/expense_text" />
+            android:text="@string/expense_text"
+            android:textSize="18sp" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/btnSave"
-        app:layout_constraintBottom_toBottomOf="@+id/glBottom"
-        app:layout_constraintStart_toStartOf="@+id/glStart"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
-        android:text="@string/add_category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.aamg.undercontrol.data
 
-import com.aamg.undercontrol.data.remote.model.User
+import com.aamg.undercontrol.data.remote.model.UserDto
 
 object DataProvider {
-    var currentUser: User? = null
+    var currentUser: UserDto? = null
 }

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.aamg.undercontrol.R
-import com.aamg.undercontrol.data.local.model.Category
+import com.aamg.undercontrol.data.remote.model.CategoryDto
 
 class CategoryAdapter(
-    private val categories: ArrayList<Category>,
+    private var categories: ArrayList<CategoryDto>,
     private val onClickDelete: (Int) -> Unit,
     private val onClickEdit: (Int) -> Unit
 ): Adapter<CategoryViewHolder>() {
@@ -21,5 +21,10 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.render(categories[position], onClickDelete, onClickEdit)
+    }
+
+    fun updateList(list: ArrayList<CategoryDto>) {
+        categories = list
+        notifyDataSetChanged()
     }
 }

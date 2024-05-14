@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aamg.undercontrol.data.DataProvider
 import com.aamg.undercontrol.data.UnderControlRepository
-import com.aamg.undercontrol.data.remote.model.ApiResponse
+import com.aamg.undercontrol.data.remote.model.ResponseDto
 import com.aamg.undercontrol.data.remote.model.SignInData
-import com.aamg.undercontrol.data.remote.model.User
+import com.aamg.undercontrol.data.remote.model.UserDto
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -32,8 +32,8 @@ class SignIn: ViewModel() {
         _isLoading.postValue(true)
         viewModelScope.launch {
             val call = repository.signIn(data)
-            call.enqueue(object: Callback<User> {
-                override fun onResponse(p0: Call<User>, response: Response<User>) {
+            call.enqueue(object: Callback<UserDto> {
+                override fun onResponse(p0: Call<UserDto>, response: Response<UserDto>) {
                     _isLoading.postValue(false)
                     if (response.isSuccessful && response.body() != null) {
                         DataProvider.currentUser = response.body()
@@ -41,7 +41,7 @@ class SignIn: ViewModel() {
                     } else {
                         val apiResponse = Gson().fromJson(
                             response.errorBody()!!.string(),
-                            ApiResponse::class.java
+                            ResponseDto::class.java
                         )
                         apiResponse.message?.let {
                             _error.postValue(it)
@@ -49,7 +49,7 @@ class SignIn: ViewModel() {
                     }
                 }
 
-                override fun onFailure(p0: Call<User>, t: Throwable) {
+                override fun onFailure(p0: Call<UserDto>, t: Throwable) {
                     Log.e("SIGN_IN_FAILURE", t.message.toString())
                 }
 

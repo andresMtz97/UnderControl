@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
-        android:id="@+id/btnAdd"
-        android:icon="@drawable/ic_add"
-        android:title="@string/add_category"
-        app:showAsAction="always" />
+        android:id="@+id/homeNavigation"
+        android:checkable="true"
+        android:checked="true"
+        android:icon="@drawable/ic_user"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/categoriesNavigation"
+        android:checkable="true"
+        android:icon="@drawable/ic_sign_out"
+        android:title="@string/categories_text" />
+    <item
+        android:id="@+id/accountsNavigation"
+        android:checkable="true"
+        android:icon="@drawable/ic_user_circle"
+        android:title="@string/accounts_text" />
 </menu>

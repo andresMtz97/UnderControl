@@ -3,13 +3,14 @@ package com.aamg.undercontrol.ui.view.adapters.category
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.aamg.undercontrol.data.local.model.Category
+import com.aamg.undercontrol.data.remote.model.CategoryDto
 import com.aamg.undercontrol.databinding.ItemCategoryBinding
 
 class CategoryViewHolder(view: View): ViewHolder(view) {
 
     private val binding = ItemCategoryBinding.bind(view)
 
-    fun render(category: Category, onClickDelete: (Int) -> Unit, onClickEdit: (Int) -> Unit) {
+    fun render(category: CategoryDto, onClickDelete: (Int) -> Unit, onClickEdit: (Int) -> Unit) {
         binding.tvCategoryName.text = category.name
         binding.ibDelete.setOnClickListener { onClickDelete(adapterPosition) }
         binding.ibEdit.setOnClickListener { onClickEdit(adapterPosition) }

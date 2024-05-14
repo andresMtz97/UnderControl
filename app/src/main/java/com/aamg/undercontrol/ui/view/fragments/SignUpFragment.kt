@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aamg.undercontrol.R
-import com.aamg.undercontrol.data.remote.model.User
+import com.aamg.undercontrol.data.remote.model.UserDto
 import com.aamg.undercontrol.databinding.FragmentSignUpBinding
 import com.aamg.undercontrol.ui.viewmodel.SignUp
 import com.aamg.undercontrol.utils.showErrorDialog
@@ -75,7 +75,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun sendData() {
-        val user = User(
+        val user = UserDto(
             name = binding.etFirstName.text.toString(),
             lastName = binding.etLastName.text.toString(),
             username = binding.etUserName.text.toString(),
