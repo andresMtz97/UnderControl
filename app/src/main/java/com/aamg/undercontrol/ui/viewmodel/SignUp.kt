@@ -19,7 +19,7 @@ class SignUp : ViewModel() {
     private val repository = UnderControlRepository.getInstance()
 
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+//    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _successMsg = MutableLiveData<String>()
     val successMsg: LiveData<String> = _successMsg

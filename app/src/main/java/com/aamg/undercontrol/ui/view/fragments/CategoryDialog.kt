@@ -11,7 +11,7 @@ import com.aamg.undercontrol.data.remote.model.CategoryDto
 import com.aamg.undercontrol.databinding.DialogEditCategoryBinding
 
 class CategoryDialog(
-    private var edit: Boolean = false,
+//    private var edit: Boolean = false,
     private var category: CategoryDto = CategoryDto(
         name = "",
         income = true,

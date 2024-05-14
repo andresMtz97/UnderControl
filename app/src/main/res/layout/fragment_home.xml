@@ -17,7 +17,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:text="Home"
+        android:text="@string/home"
         android:gravity="center"
         android:textSize="50sp"
         android:layout_width="match_parent"

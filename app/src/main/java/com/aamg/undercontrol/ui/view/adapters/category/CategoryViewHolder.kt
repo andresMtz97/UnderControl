@@ -2,7 +2,6 @@ package com.aamg.undercontrol.ui.view.adapters.category
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.aamg.undercontrol.data.local.model.Category
 import com.aamg.undercontrol.data.remote.model.CategoryDto
 import com.aamg.undercontrol.databinding.ItemCategoryBinding
 

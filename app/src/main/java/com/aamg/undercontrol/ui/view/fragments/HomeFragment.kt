@@ -19,7 +19,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val activity = requireActivity() as? AppCompatActivity
+//        val activity = requireActivity() as? AppCompatActivity
 //        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 

@@ -26,7 +26,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.tvHome.text = "Bienvenido ${DataProvider.actualUser?.firstName}"
+        binding.tvHome.text = getString(R.string.welcome, DataProvider.actualUser?.firstName)
         initListeners()
     }
 

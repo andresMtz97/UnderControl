@@ -3,14 +3,13 @@ package com.aamg.undercontrol.ui.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.aamg.undercontrol.data.local.DataProvider
 import com.aamg.undercontrol.R
-import com.aamg.undercontrol.ui.view.adapters.account.AccountAdapter
+import com.aamg.undercontrol.data.local.DataProvider
 import com.aamg.undercontrol.databinding.ActivityAccountBinding
+import com.aamg.undercontrol.ui.view.adapters.account.AccountAdapter
 
 class AccountActivity : AppCompatActivity() {
 
@@ -58,9 +57,9 @@ class AccountActivity : AppCompatActivity() {
         adapter.notifyItemRemoved(index)
     }
 
-    private fun initListeners() {
-
-    }
+//    private fun initListeners() {
+//
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         this.menu = menu
