@@ -8,8 +8,8 @@ import com.aamg.undercontrol.data.remote.model.AccountDto
 
 class AccountAdapter(
     private var accounts: ArrayList<AccountDto>,
-    private val onClickDelete: (Int) -> Unit,
-    private val onClickEdit: (Int) -> Unit
+    private val onClickEdit: (Int) -> Unit,
+    private val onClickDelete: (Int) -> Unit
 ): Adapter<AccountViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -17,7 +17,7 @@ class AccountAdapter(
     }
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
-        holder.render(accounts[position], onClickDelete, onClickEdit)
+        holder.render(accounts[position], onClickEdit, onClickDelete)
     }
 
     override fun getItemCount(): Int = accounts.size

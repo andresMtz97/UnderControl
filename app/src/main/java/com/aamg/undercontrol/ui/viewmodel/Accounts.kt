@@ -81,6 +81,61 @@ class Accounts: ViewModel() {
                 }
             })
         }
+    }
 
+    fun updateAccount(account: AccountDto, position: Int) {
+        _loading.postValue(true)
+        Log.i("Accounts", account.toString())
+        viewModelScope.launch {
+            val call: Call<ResponseDto<AccountDto>> = repository.updateAccount("Bearer $token", account.id!!, account)
+            call.enqueue(object: Callback<ResponseDto<AccountDto>> {
+                override fun onResponse(
+                    p0: Call<ResponseDto<AccountDto>>,
+                    r: Response<ResponseDto<AccountDto>>
+                ) {
+                    Log.i("Accounts", r.body().toString())
+                    if (r.isSuccessful && r.body() != null) {
+                        val newList = ArrayList(_accounts.value!!)
+                        newList[position] = r.body()!!.data
+                        _accounts.postValue(newList)
+                    } else {
+                        val apiResponse = Gson().fromJson(r.errorBody()!!.string(), ResponseDto::class.java)
+                        apiResponse.errors?.let {
+                            _errors.postValue(it)
+                        }
+                    }
+                    _loading.postValue(false)
+                }
+
+                override fun onFailure(p0: Call<ResponseDto<AccountDto>>, t: Throwable) {
+                    Log.e("ERROR_CALL", t.message.toString())
+                }
+            })
+        }
+    }
+
+    fun deleteAccount(id: Long, position: Int) {
+        _loading.postValue(true)
+        viewModelScope.launch {
+            val call: Call<ResponseDto<AccountDto>> = repository.deleteAccount("Bearer $token", id)
+            call.enqueue(object: Callback<ResponseDto<AccountDto>> {
+                override fun onResponse(
+                    p0: Call<ResponseDto<AccountDto>>,
+                    r: Response<ResponseDto<AccountDto>>
+                ) {
+                    Log.i("Accounts delete", r.isSuccessful.toString())
+                    if (r.isSuccessful && r.body() != null) {
+                        val newList = ArrayList(_accounts.value!!)
+                        newList.removeAt(position)
+                        _accounts.postValue(newList)
+                    }
+                    _loading.postValue(false)
+                }
+
+                override fun onFailure(p0: Call<ResponseDto<AccountDto>>, t: Throwable) {
+                    Log.e("ERROR_CALL", t.message.toString())
+                }
+            })
+        }
     }
 }

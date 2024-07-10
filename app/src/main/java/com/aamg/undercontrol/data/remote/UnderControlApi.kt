@@ -7,9 +7,11 @@ import com.aamg.undercontrol.data.remote.model.SignInData
 import com.aamg.undercontrol.data.remote.model.UserDto
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface UnderControlApi {
@@ -40,6 +42,19 @@ interface UnderControlApi {
     fun addAccount(
         @Header("Authorization") jwt: String,
         @Body account: AccountDto
+    ): Call<ResponseDto<AccountDto>>
+
+    @PUT("/api/cuentas/{id}")
+    fun updateAccount(
+        @Header("Authorization") jwt: String,
+        @Path("id") id: String,
+        @Body account: AccountDto
+    ): Call<ResponseDto<AccountDto>>
+
+    @DELETE("/api/cuentas/{id}")
+    fun deleteAccount(
+        @Header("Authorization") jwt: String,
+        @Path("id") id: String
     ): Call<ResponseDto<AccountDto>>
 
 }

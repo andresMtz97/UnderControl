@@ -23,15 +23,17 @@
     <string name="password">Contraseña</string>
     <string name="required">Campo obligatorio.</string>
     <string name="sign_out">Cerrar sesión</string>
-    <string name="signin_failed">Noimbre de usuario o contraseña incorrectas. Por favor intente de nuevo.</string>
+    <string name="signin_failed">Nombre de usuario o contraseña incorrectas. Por favor intente de nuevo.</string>
     <string name="hint_account_name">Nombre de la Cuenta</string>
     <string name="balance_text">Saldo</string>
     <string name="hint_account_balance">Saldo de la cuenta</string>
-    <string name="save_text">Guardar</string>
+    <string name="save">Guardar</string>
+    <string name="update">Actualizar</string>
     <string name="edit_account">Editar Cuenta</string>
     <string name="add_account">Registrar Cuenta</string>
     <string name="home">Inicio</string>
     <string name="welcome">Bienvenido(a) %s</string>
     <string name="no_data">No hay registros.</string>
     <string name="add">Agregar</string>
+    <string name="cancel">Cancelar</string>
 </resources>

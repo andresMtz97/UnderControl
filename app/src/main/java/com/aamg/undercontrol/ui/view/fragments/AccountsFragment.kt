@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.aamg.undercontrol.data.DataProvider
+import com.aamg.undercontrol.data.remote.model.AccountDto
 import com.aamg.undercontrol.databinding.FragmentAccountsBinding
 import com.aamg.undercontrol.ui.view.adapters.account.AccountAdapter
 import com.aamg.undercontrol.ui.viewmodel.Accounts
@@ -44,13 +46,29 @@ class AccountsFragment : Fragment() {
     }
 
     private fun initRV() {
-        accountsAdapter = AccountAdapter(ArrayList(), {}, {})
+        accountsAdapter = AccountAdapter(
+            ArrayList(),
+            { position ->
+                Log.i("AccountsFragment", "position: $position")
+                val account = viewModel.accounts.value?.get(position)
+                if (account != null) {
+                    displayEditAccount(true, account, position)
+                }
+            },
+            { position ->
+                val account = viewModel.accounts.value?.get(position)
+                if (account != null) {
+                    viewModel.deleteAccount(account.id!!, position)
+                }
+
+            }
+        )
         binding.rvAccounts.adapter = accountsAdapter
         binding.rvAccounts.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun initListeners() {
-        binding.fabAddAccount.setOnClickListener { displayAddAccount() }
+        binding.fabAddAccount.setOnClickListener { displayEditAccount() }
     }
 
     private fun initObservers() {
@@ -74,8 +92,21 @@ class AccountsFragment : Fragment() {
         _binding = null
     }
 
-    private fun displayAddAccount() {
-        val dialog = AccountDialog { account -> viewModel.createAccount(account) }
+    private fun displayEditAccount(
+        isEdit: Boolean = false,
+        accountDto: AccountDto = AccountDto(
+            name = "",
+            balance = 0.0,
+        ),
+        position: Int = -1
+    ) {
+        val dialog = AccountDialog(isEdit, accountDto) { account ->
+            if (isEdit) {
+                viewModel.updateAccount(account, position)
+            } else {
+                viewModel.createAccount(account)
+            }
+        }
         dialog.show(parentFragmentManager, "addAccount")
     }
 }

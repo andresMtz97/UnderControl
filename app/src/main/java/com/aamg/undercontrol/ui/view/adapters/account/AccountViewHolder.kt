@@ -11,12 +11,14 @@ class AccountViewHolder(view: View) : ViewHolder(view) {
 
     private val binding = ItemAccountBinding.bind(view)
 
-    fun render(account: AccountDto, onClickDelete: (Int) -> Unit, onClickEdit: (Int) -> Unit) {
+    fun render(account: AccountDto, onClickEdit: (Int) -> Unit, onClickDelete: (Int) -> Unit) {
         binding.tvAccountName.text = account.name
         val formatter = NumberFormat.getCurrencyInstance(Locale.US)
         binding.tvAccountBalance.text = formatter.format(account.balance)
 
+        binding.ibEdit.setOnClickListener {
+            onClickEdit(adapterPosition)
+        }
         binding.ibDelete.setOnClickListener { onClickDelete(adapterPosition) }
-        binding.ibEdit.setOnClickListener { onClickEdit(adapterPosition) }
     }
 }

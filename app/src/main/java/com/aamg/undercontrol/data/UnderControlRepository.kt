@@ -19,12 +19,20 @@ class UnderControlRepository {
 
     fun getCategories(jwt: String, type: String): Call<ArrayList<CategoryDto>> = api.getCategories(jwt, type)
 
-    fun addCategory(jwt: String, type: String, category: CategoryDto): Call<ResponseDto<CategoryDto>> = api.addCategory(jwt, type, category)
+    fun addCategory(jwt: String, type: String, category: CategoryDto): Call<ResponseDto<CategoryDto>> =
+        api.addCategory(jwt, type, category)
 
     fun getAccounts(jwt: String): Call<ArrayList<AccountDto>> = api.getAccounts(jwt)
 
     fun addAccount(jwt: String, account: AccountDto): Call<ResponseDto<AccountDto>> =
         api.addAccount(jwt, account)
+
+    fun updateAccount(jwt: String, id: Long, account: AccountDto): Call<ResponseDto<AccountDto>> =
+        api.updateAccount(jwt, id.toString(), account)
+
+    fun deleteAccount(jwt: String, id: Long): Call<ResponseDto<AccountDto>> =
+        api.deleteAccount(jwt, id.toString())
+
 
     companion object {
         @Volatile

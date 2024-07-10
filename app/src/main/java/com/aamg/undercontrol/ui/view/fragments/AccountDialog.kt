@@ -6,17 +6,15 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
+import com.aamg.undercontrol.R
 import com.aamg.undercontrol.data.DataProvider
 import com.aamg.undercontrol.data.remote.model.AccountDto
 import com.aamg.undercontrol.databinding.DialogEditAccountBinding
 
 class AccountDialog(
-    private var account: AccountDto = AccountDto(
-        name = "",
-        balance = 0.0,
-        userId = DataProvider.currentUser?.id
-    ),
-    private val createAccount: (AccountDto) -> Unit
+    private var edit: Boolean = false,
+    private var account: AccountDto,
+    private val save: (AccountDto) -> Unit
 ) : DialogFragment() {
 
     private var _binding: DialogEditAccountBinding? = null
@@ -38,6 +36,11 @@ class AccountDialog(
     override fun onStart() {
         super.onStart()
 
+        if (edit) {
+            binding.etAccountName.setText(account.name)
+            binding.etAccountBalance.setText(account.balance.toString())
+        }
+
         val alertDialog = dialog as AlertDialog
         saveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
         saveButton?.isEnabled = validateForm()
@@ -51,14 +54,24 @@ class AccountDialog(
     }
 
     private fun buildDialog(): Dialog {
+        val positiveBtnText = if (edit)
+            requireContext().getString(R.string.update)
+        else
+            requireContext().getString(R.string.save)
+
+        val title = if (edit)
+            requireContext().getString(R.string.edit_account)
+        else
+            requireContext().getString(R.string.create_account)
+
         return builder.setView(binding.root)
-            .setTitle("Categoría")
-            .setPositiveButton("Guardar") { _, _ ->
+            .setTitle(title)
+            .setPositiveButton(positiveBtnText) { _, _ ->
                 account.name = binding.etAccountName.text.toString()
                 account.balance = binding.etAccountBalance.text.toString().toDouble()
-                createAccount(account)
+                save(account)
             }
-            .setNegativeButton("Cancelar") { _, _ -> }
+            .setNegativeButton(requireContext().getString(R.string.cancel)) { _, _ -> }
             .create()
     }
 
