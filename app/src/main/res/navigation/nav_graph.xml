@@ -57,7 +57,7 @@
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
     </navigation>
-    <navigation android:id="@+id/navigation"
+    <navigation android:id="@+id/accountsNavigation"
         app:startDestination="@id/accountsFragment">
         <fragment
             android:id="@+id/accountsFragment"

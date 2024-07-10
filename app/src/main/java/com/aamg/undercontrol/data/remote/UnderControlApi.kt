@@ -1,5 +1,6 @@
 package com.aamg.undercontrol.data.remote
 
+import com.aamg.undercontrol.data.remote.model.AccountDto
 import com.aamg.undercontrol.data.remote.model.CategoryDto
 import com.aamg.undercontrol.data.remote.model.ResponseDto
 import com.aamg.undercontrol.data.remote.model.SignInData
@@ -31,4 +32,14 @@ interface UnderControlApi {
         @Path("type") type: String,
         @Body category: CategoryDto
     ): Call<ResponseDto<CategoryDto>>
+
+    @GET("/api/cuentas")
+    fun getAccounts(@Header("Authorization") jwt: String): Call<ArrayList<AccountDto>>
+
+    @POST("/api/cuentas")
+    fun addAccount(
+        @Header("Authorization") jwt: String,
+        @Body account: AccountDto
+    ): Call<ResponseDto<AccountDto>>
+
 }

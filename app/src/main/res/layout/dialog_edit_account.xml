@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.view.EditAccountActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="32dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="16dp" />
+
+    <TextView
+        android:id="@+id/tvAccountName"
+        style="@style/TextViewForm"
+        android:text="@string/name_text"
+        app:layout_constraintStart_toStartOf="@+id/glStart"
+        app:layout_constraintTop_toTopOf="@id/glTop" />
+
+    <EditText
+        android:id="@+id/etAccountName"
+        style="@style/EditTextForm"
+        android:autofillHints="name"
+        android:hint="@string/hint_account_name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/glEnd"
+        app:layout_constraintStart_toStartOf="@+id/glStart"
+        app:layout_constraintTop_toBottomOf="@+id/tvAccountName" />
+
+    <TextView
+        android:id="@+id/tvAccountBalance"
+        style="@style/TextViewForm"
+        android:text="@string/balance_text"
+        app:layout_constraintStart_toStartOf="@id/glStart"
+        app:layout_constraintTop_toBottomOf="@+id/etAccountName" />
+
+    <EditText
+        android:id="@+id/etAccountBalance"
+        style="@style/EditTextForm"
+        android:autofillHints="false"
+        android:hint="@string/hint_account_balance"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="@id/glEnd"
+        app:layout_constraintStart_toStartOf="@id/glStart"
+        app:layout_constraintTop_toBottomOf="@+id/tvAccountBalance" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvAccountIcon"-->
+    <!--        style="@style/TextViewForm"-->
+    <!--        android:text="@string/balance_text"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/glStart"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/etAccountBalance" />-->
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/etAccountIcon"-->
+    <!--        style="@style/EditTextForm"-->
+    <!--        android:hint="@string/hint_account_balance"-->
+    <!--        android:inputType="textMultiLine"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/tvAccountIcon"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/glStart"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/glEnd"-->
+    <!--        android:autofillHints="false" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>

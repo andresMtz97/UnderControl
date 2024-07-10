@@ -2,6 +2,7 @@ package com.aamg.undercontrol.data
 
 import com.aamg.undercontrol.data.remote.RetrofitHelper
 import com.aamg.undercontrol.data.remote.UnderControlApi
+import com.aamg.undercontrol.data.remote.model.AccountDto
 import com.aamg.undercontrol.data.remote.model.CategoryDto
 import com.aamg.undercontrol.data.remote.model.ResponseDto
 import com.aamg.undercontrol.data.remote.model.SignInData
@@ -19,6 +20,11 @@ class UnderControlRepository {
     fun getCategories(jwt: String, type: String): Call<ArrayList<CategoryDto>> = api.getCategories(jwt, type)
 
     fun addCategory(jwt: String, type: String, category: CategoryDto): Call<ResponseDto<CategoryDto>> = api.addCategory(jwt, type, category)
+
+    fun getAccounts(jwt: String): Call<ArrayList<AccountDto>> = api.getAccounts(jwt)
+
+    fun addAccount(jwt: String, account: AccountDto): Call<ResponseDto<AccountDto>> =
+        api.addAccount(jwt, account)
 
     companion object {
         @Volatile

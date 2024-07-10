@@ -45,6 +45,7 @@ class Categories : ViewModel() {
                     ) {
                         Log.i("CAT_RESPONSE", r.body().toString())
                         _incomeCategories.postValue(r.body())
+                        _isLoading.postValue(false)
                     }
 
                     override fun onFailure(p0: Call<ArrayList<CategoryDto>>, t: Throwable) {
@@ -73,7 +74,7 @@ class Categories : ViewModel() {
     }
 
     fun createCategory(category: CategoryDto) {
-        Log.i("CATEGORY", "Creating category...")
+        _isLoading.postValue(true)
         val type = if (category.income) "ingreso" else "egreso"
         viewModelScope.launch {
             val call: Call<ResponseDto<CategoryDto>> =
@@ -103,6 +104,7 @@ class Categories : ViewModel() {
                             _errors.postValue(it)
                         }
                     }
+                    _isLoading.postValue(false)
                 }
 
                 override fun onFailure(p0: Call<ResponseDto<CategoryDto>>, t: Throwable) {

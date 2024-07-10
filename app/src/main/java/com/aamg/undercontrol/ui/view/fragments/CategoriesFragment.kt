@@ -1,6 +1,7 @@
 package com.aamg.undercontrol.ui.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,24 +62,28 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            binding.pbLoading.visibility = View.GONE
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.pbLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
         viewModel.incomeCategories.observe(viewLifecycleOwner) {
+            Log.i("CategoriesFragment", "incomeCategories: $it")
             if (it.isEmpty()) {
                 binding.tvIncomeNoData.visibility = View.VISIBLE
             } else {
                 incomeAdapter.updateList(it)
+                binding.tvIncomeNoData.visibility = View.GONE
             }
         }
 
         viewModel.expenseCategories.observe(viewLifecycleOwner) {
+            Log.i("CategoriesFragment", "expenseCategories: $it")
             binding.rvExpenseCategories.adapter = CategoryAdapter(it, {}, {})
             if (it.isEmpty()) {
                 binding.tvExpenseNoData.visibility = View.VISIBLE
             } else {
                 expenseAdapter.updateList(it)
+                binding.tvExpenseNoData.visibility = View.GONE
             }
         }
 

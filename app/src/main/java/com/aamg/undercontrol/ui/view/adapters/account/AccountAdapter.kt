@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.aamg.undercontrol.R
-import com.aamg.undercontrol.data.local.model.Account
+import com.aamg.undercontrol.data.remote.model.AccountDto
 
 class AccountAdapter(
-    private val accounts: ArrayList<Account>,
+    private var accounts: ArrayList<AccountDto>,
     private val onClickDelete: (Int) -> Unit,
     private val onClickEdit: (Int) -> Unit
 ): Adapter<AccountViewHolder>() {
@@ -21,4 +21,9 @@ class AccountAdapter(
     }
 
     override fun getItemCount(): Int = accounts.size
+
+    fun updateList(list: ArrayList<AccountDto>) {
+        accounts = list
+        notifyDataSetChanged()
+    }
 }
