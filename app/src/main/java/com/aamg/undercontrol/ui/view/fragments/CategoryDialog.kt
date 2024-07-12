@@ -3,20 +3,18 @@ package com.aamg.undercontrol.ui.view.fragments
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
+import com.aamg.undercontrol.R
 import com.aamg.undercontrol.data.DataProvider
 import com.aamg.undercontrol.data.remote.model.CategoryDto
 import com.aamg.undercontrol.databinding.DialogEditCategoryBinding
 
 class CategoryDialog(
-//    private var edit: Boolean = false,
-    private var category: CategoryDto = CategoryDto(
-        name = "",
-        income = true,
-        userId = DataProvider.currentUser?.id
-    ),
+    private var edit: Boolean = false,
+    private var category: CategoryDto,
     private val createCategory: (CategoryDto) -> Unit
 ) : DialogFragment() {
 
@@ -39,6 +37,12 @@ class CategoryDialog(
     override fun onStart() {
         super.onStart()
 
+        if (edit) {
+            binding.etCategoryName.setText(category.name)
+            binding.rgCategoryType.visibility = View.GONE
+            binding.tvCategoryType.visibility = View.GONE
+        }
+
         val alertDialog = dialog as AlertDialog
         saveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
         saveButton?.isEnabled = validateForm()
@@ -52,19 +56,30 @@ class CategoryDialog(
     }
 
     private fun buildDialog(): Dialog {
+        val positiveBtnText = if (edit) requireContext().getString(R.string.update) else requireContext().getString(R.string.save)
+        val title = if (edit) requireContext().getString(R.string.edit_category) else requireContext().getString(R.string.add_category)
+
         return builder.setView(binding.root)
-            .setTitle("Categoría")
-            .setPositiveButton("Guardar") { _, _ ->
-                category.income = binding.rbIncome.isChecked
+            .setTitle(title)
+            .setPositiveButton(positiveBtnText) { _, _ ->
+                if (!edit) {
+                    category.income = binding.rbIncome.isChecked
+                }
                 category.name = binding.etCategoryName.text.toString()
                 createCategory(category)
             }
-            .setNegativeButton("Cancelar") { _, _ -> }
+            .setNegativeButton(requireContext().getString(R.string.cancel)) { _, _ -> }
             .create()
     }
 
-    private fun validateForm(): Boolean = binding.etCategoryName.text.isNotBlank() &&
-            (binding.rbIncome.isChecked || binding.rbExpense.isChecked)
+    private fun validateForm(): Boolean {
+        return if (edit) {
+            binding.etCategoryName.text.isNotBlank()
+        } else {
+            binding.etCategoryName.text.isNotBlank() &&
+                    (binding.rbIncome.isChecked || binding.rbExpense.isChecked)
+        }
+    }
 
     private fun initListeners() {
         binding.etCategoryName.addTextChangedListener { saveButton?.isEnabled = validateForm() }

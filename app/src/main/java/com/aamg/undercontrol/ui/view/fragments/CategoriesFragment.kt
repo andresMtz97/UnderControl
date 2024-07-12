@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.aamg.undercontrol.data.DataProvider
+import com.aamg.undercontrol.data.remote.model.CategoryDto
 import com.aamg.undercontrol.databinding.FragmentCategoriesBinding
 import com.aamg.undercontrol.ui.view.adapters.category.CategoryAdapter
 import com.aamg.undercontrol.ui.viewmodel.Categories
@@ -48,21 +50,29 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun initRV() {
-        incomeAdapter = CategoryAdapter(ArrayList(), {}, {})
+        incomeAdapter = CategoryAdapter(
+            ArrayList(),
+            { onEditBtnTapped(it, true) },
+            { onDeleteBtnTapped(it, true) }
+        )
         binding.rvIncomeCategories.adapter = incomeAdapter
         binding.rvIncomeCategories.layoutManager = LinearLayoutManager(requireContext())
 
-        expenseAdapter = CategoryAdapter(ArrayList(), {}, {})
+        expenseAdapter = CategoryAdapter(
+            ArrayList(),
+            { onEditBtnTapped(it, false) },
+            { onDeleteBtnTapped(it, false) }
+        )
         binding.rvExpenseCategories.adapter = expenseAdapter
         binding.rvExpenseCategories.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun initListeners() {
-        binding.fabAddCategory.setOnClickListener { displayAddCategory() }
+        binding.fabAddCategory.setOnClickListener { displayEditCategory() }
     }
 
     private fun initObservers() {
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+        viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
             binding.pbLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
@@ -78,7 +88,7 @@ class CategoriesFragment : Fragment() {
 
         viewModel.expenseCategories.observe(viewLifecycleOwner) {
             Log.i("CategoriesFragment", "expenseCategories: $it")
-            binding.rvExpenseCategories.adapter = CategoryAdapter(it, {}, {})
+            //binding.rvExpenseCategories.adapter = CategoryAdapter(it, {}, {})
             if (it.isEmpty()) {
                 binding.tvExpenseNoData.visibility = View.VISIBLE
             } else {
@@ -97,8 +107,42 @@ class CategoriesFragment : Fragment() {
         }
     }
 
-    private fun displayAddCategory() {
-        val dialog = CategoryDialog { category -> viewModel.createCategory(category) }
-        dialog.show(parentFragmentManager, "addCategory")
+    private fun displayEditCategory(
+        isEdit: Boolean = false,
+        categoryDto: CategoryDto = CategoryDto(
+            name = "",
+            income = true,
+            userId = DataProvider.currentUser?.id
+        ),
+        position: Int = -1
+    ) {
+        val dialog = CategoryDialog(isEdit, categoryDto) { category ->
+            if (isEdit) {
+                viewModel.updateCategory(category, position)
+            } else {
+                viewModel.createCategory(category)
+            }
+        }
+        dialog.show(parentFragmentManager, "editCategory")
+    }
+
+    private fun onEditBtnTapped(position: Int, isIncome: Boolean) {
+        Log.i("CategoriesFragment", "onEditBtnTapped: $position")
+        val category =
+            if (isIncome) viewModel.incomeCategories.value?.get(position)
+            else viewModel.expenseCategories.value?.get(position)
+
+        if (category != null) {
+            displayEditCategory(true, category, position)
+        }
+    }
+
+    private fun onDeleteBtnTapped(position: Int, isIncome: Boolean) {
+        val category =
+            if (isIncome) viewModel.incomeCategories.value?.get(position)
+            else viewModel.expenseCategories.value?.get(position)
+        if (category != null) {
+            viewModel.deleteCategory(category, position)
+        }
     }
 }

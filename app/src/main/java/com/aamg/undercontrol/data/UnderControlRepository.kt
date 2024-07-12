@@ -22,6 +22,15 @@ class UnderControlRepository {
     fun addCategory(jwt: String, type: String, category: CategoryDto): Call<ResponseDto<CategoryDto>> =
         api.addCategory(jwt, type, category)
 
+    fun updateCategory(
+        jwt: String,
+        id: Long,
+        category: CategoryDto
+    ): Call<ResponseDto<CategoryDto>> = api.updateCategory(jwt, id.toString(), category)
+
+    fun deleteCategory(jwt: String, id: Long): Call<ResponseDto<CategoryDto>> =
+        api.deleteCategory(jwt, id.toString())
+
     fun getAccounts(jwt: String): Call<ArrayList<AccountDto>> = api.getAccounts(jwt)
 
     fun addAccount(jwt: String, account: AccountDto): Call<ResponseDto<AccountDto>> =

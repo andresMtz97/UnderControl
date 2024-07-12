@@ -8,8 +8,8 @@ import com.aamg.undercontrol.data.remote.model.CategoryDto
 
 class CategoryAdapter(
     private var categories: ArrayList<CategoryDto>,
-    private val onClickDelete: (Int) -> Unit,
-    private val onClickEdit: (Int) -> Unit
+    private val onClickEdit: (Int) -> Unit,
+    private val onClickDelete: (Int) -> Unit
 ): Adapter<CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -20,7 +20,7 @@ class CategoryAdapter(
     override fun getItemCount(): Int = categories.size
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.render(categories[position], onClickDelete, onClickEdit)
+        holder.render(categories[position], onClickEdit, onClickDelete)
     }
 
     fun updateList(list: ArrayList<CategoryDto>) {

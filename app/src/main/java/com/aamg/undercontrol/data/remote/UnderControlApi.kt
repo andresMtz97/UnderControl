@@ -35,6 +35,19 @@ interface UnderControlApi {
         @Body category: CategoryDto
     ): Call<ResponseDto<CategoryDto>>
 
+    @PUT("api/categorias/{id}")
+    fun updateCategory(
+        @Header("Authorization") jwt: String,
+        @Path("id") id: String,
+        @Body category: CategoryDto
+    ): Call<ResponseDto<CategoryDto>>
+
+    @DELETE("api/categorias/{id}")
+    fun deleteCategory(
+        @Header("Authorization") jwt: String,
+        @Path("id") id: String
+    ): Call<ResponseDto<CategoryDto>>
+
     @GET("/api/cuentas")
     fun getAccounts(@Header("Authorization") jwt: String): Call<ArrayList<AccountDto>>
 

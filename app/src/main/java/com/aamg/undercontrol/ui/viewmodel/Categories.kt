@@ -20,8 +20,8 @@ class Categories : ViewModel() {
     private val repository = UnderControlRepository.getInstance()
     private val token = DataProvider.currentUser?.token
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
 
     private val _incomeCategories = MutableLiveData<ArrayList<CategoryDto>>()
     val incomeCategories: LiveData<ArrayList<CategoryDto>> = _incomeCategories
@@ -33,7 +33,7 @@ class Categories : ViewModel() {
     val errors: LiveData<ArrayList<ValidationError>> = _errors
 
     fun onCreate() {
-        _isLoading.postValue(true)
+        _loading.postValue(true)
         viewModelScope.launch {
             if (token != null) {
                 val callIncome: Call<ArrayList<CategoryDto>> =
@@ -45,7 +45,6 @@ class Categories : ViewModel() {
                     ) {
                         Log.i("CAT_RESPONSE", r.body().toString())
                         _incomeCategories.postValue(r.body())
-                        _isLoading.postValue(false)
                     }
 
                     override fun onFailure(p0: Call<ArrayList<CategoryDto>>, t: Throwable) {
@@ -63,6 +62,7 @@ class Categories : ViewModel() {
                     ) {
                         Log.i("CAT_RESPONSE", r.body().toString())
                         _expenseCategories.postValue(r.body())
+                        _loading.postValue(false)
                     }
 
                     override fun onFailure(p0: Call<ArrayList<CategoryDto>>, t: Throwable) {
@@ -74,7 +74,7 @@ class Categories : ViewModel() {
     }
 
     fun createCategory(category: CategoryDto) {
-        _isLoading.postValue(true)
+        _loading.postValue(true)
         val type = if (category.income) "ingreso" else "egreso"
         viewModelScope.launch {
             val call: Call<ResponseDto<CategoryDto>> =
@@ -104,7 +104,7 @@ class Categories : ViewModel() {
                             _errors.postValue(it)
                         }
                     }
-                    _isLoading.postValue(false)
+                    _loading.postValue(false)
                 }
 
                 override fun onFailure(p0: Call<ResponseDto<CategoryDto>>, t: Throwable) {
@@ -115,4 +115,67 @@ class Categories : ViewModel() {
         }
     }
 
+    fun updateCategory(category: CategoryDto, position: Int) {
+        _loading.postValue(true)
+        Log.i("Accounts", category.toString())
+        viewModelScope.launch {
+            val call: Call<ResponseDto<CategoryDto>> =
+                repository.updateCategory("Bearer $token", category.id!!, category)
+            call.enqueue(object : Callback<ResponseDto<CategoryDto>> {
+                override fun onResponse(
+                    p0: Call<ResponseDto<CategoryDto>>,
+                    r: Response<ResponseDto<CategoryDto>>
+                ) {
+                    Log.i("Categories", r.body().toString())
+                    if (r.isSuccessful && r.body() != null) {
+                        val newList =
+                            ArrayList(if (category.income) _incomeCategories.value!! else _expenseCategories.value!!)
+                        newList[position] = r.body()!!.data
+
+                        if (category.income) {
+                            _incomeCategories.postValue(newList)
+                        } else {
+                            _expenseCategories.postValue(newList)
+                        }
+                    }
+                    _loading.postValue(false)
+                }
+
+                override fun onFailure(p0: Call<ResponseDto<CategoryDto>>, t: Throwable) {
+                    Log.e("ERROR_CALL", t.message.toString())
+                }
+            })
+        }
+    }
+
+    fun deleteCategory(category: CategoryDto, position: Int) {
+        _loading.postValue(true)
+        viewModelScope.launch {
+            val call: Call<ResponseDto<CategoryDto>> =
+                repository.deleteCategory("Bearer $token", category.id!!)
+            call.enqueue(object : Callback<ResponseDto<CategoryDto>> {
+                override fun onResponse(
+                    p0: Call<ResponseDto<CategoryDto>>,
+                    r: Response<ResponseDto<CategoryDto>>
+                ) {
+                    Log.i("Categories", r.body().toString())
+                    if (r.isSuccessful && r.body() != null) {
+                        val newList =
+                            ArrayList(if (category.income) _incomeCategories.value!! else _expenseCategories.value!!)
+                        newList.removeAt(position)
+                        if (category.income) {
+                            _incomeCategories.postValue(newList)
+                        } else {
+                            _expenseCategories.postValue(newList)
+                        }
+                    }
+                    _loading.postValue(false)
+                }
+
+                override fun onFailure(p0: Call<ResponseDto<CategoryDto>>, t: Throwable) {
+                    Log.e("ERROR_CALL", t.message.toString())
+                }
+            })
+        }
+    }
 }

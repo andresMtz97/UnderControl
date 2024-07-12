@@ -9,7 +9,7 @@ class CategoryViewHolder(view: View): ViewHolder(view) {
 
     private val binding = ItemCategoryBinding.bind(view)
 
-    fun render(category: CategoryDto, onClickDelete: (Int) -> Unit, onClickEdit: (Int) -> Unit) {
+    fun render(category: CategoryDto, onClickEdit: (Int) -> Unit, onClickDelete: (Int) -> Unit) {
         binding.tvCategoryName.text = category.name
         binding.ibDelete.setOnClickListener { onClickDelete(adapterPosition) }
         binding.ibEdit.setOnClickListener { onClickEdit(adapterPosition) }

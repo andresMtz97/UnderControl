@@ -49,7 +49,6 @@ class AccountsFragment : Fragment() {
         accountsAdapter = AccountAdapter(
             ArrayList(),
             { position ->
-                Log.i("AccountsFragment", "position: $position")
                 val account = viewModel.accounts.value?.get(position)
                 if (account != null) {
                     displayEditAccount(true, account, position)
@@ -107,6 +106,6 @@ class AccountsFragment : Fragment() {
                 viewModel.createAccount(account)
             }
         }
-        dialog.show(parentFragmentManager, "addAccount")
+        dialog.show(parentFragmentManager, "editAccount")
     }
 }
