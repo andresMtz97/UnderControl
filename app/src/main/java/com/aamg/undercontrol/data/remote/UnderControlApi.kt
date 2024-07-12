@@ -2,6 +2,7 @@ package com.aamg.undercontrol.data.remote
 
 import com.aamg.undercontrol.data.remote.model.AccountDto
 import com.aamg.undercontrol.data.remote.model.CategoryDto
+import com.aamg.undercontrol.data.remote.model.MovementDto
 import com.aamg.undercontrol.data.remote.model.ResponseDto
 import com.aamg.undercontrol.data.remote.model.SignInData
 import com.aamg.undercontrol.data.remote.model.UserDto
@@ -70,4 +71,6 @@ interface UnderControlApi {
         @Path("id") id: String
     ): Call<ResponseDto<AccountDto>>
 
+    @GET("/api/movimientos")
+    fun getMovements(@Header("Authorization") jwt: String): Call<ArrayList<MovementDto>>
 }

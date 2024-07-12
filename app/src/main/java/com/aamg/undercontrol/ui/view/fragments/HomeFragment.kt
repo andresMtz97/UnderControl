@@ -16,12 +16,6 @@ class HomeFragment : Fragment() {
 
     private val viewModel: Home by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        val activity = requireActivity() as? AppCompatActivity
-//        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,8 +31,13 @@ class HomeFragment : Fragment() {
 
     private fun initUI() {
         viewModel.onCreate()
+        initRV()
         initListeners()
         initObservers()
+    }
+
+    private fun initRV() {
+
     }
 
     private fun initListeners() {
@@ -48,6 +47,14 @@ class HomeFragment : Fragment() {
     private fun initObservers() {
         viewModel.name.observe(viewLifecycleOwner) {
             binding.tvWelcome.text = requireContext().getString(R.string.welcome, it)
+        }
+
+        viewModel.movements.observe(viewLifecycleOwner) { movements ->
+            if (movements.isEmpty()) {
+                binding.tvNoData.visibility = View.VISIBLE
+            } else {
+                binding.tvNoData.visibility = View.GONE
+            }
         }
     }
 

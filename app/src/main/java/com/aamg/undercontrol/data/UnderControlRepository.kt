@@ -4,6 +4,7 @@ import com.aamg.undercontrol.data.remote.RetrofitHelper
 import com.aamg.undercontrol.data.remote.UnderControlApi
 import com.aamg.undercontrol.data.remote.model.AccountDto
 import com.aamg.undercontrol.data.remote.model.CategoryDto
+import com.aamg.undercontrol.data.remote.model.MovementDto
 import com.aamg.undercontrol.data.remote.model.ResponseDto
 import com.aamg.undercontrol.data.remote.model.SignInData
 import com.aamg.undercontrol.data.remote.model.UserDto
@@ -42,6 +43,7 @@ class UnderControlRepository {
     fun deleteAccount(jwt: String, id: Long): Call<ResponseDto<AccountDto>> =
         api.deleteAccount(jwt, id.toString())
 
+    fun getMovements(jwt: String): Call<ArrayList<MovementDto>> = api.getMovements(jwt)
 
     companion object {
         @Volatile

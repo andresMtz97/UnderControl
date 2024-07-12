@@ -36,4 +36,8 @@
     <string name="no_data">No hay registros.</string>
     <string name="add">Agregar</string>
     <string name="cancel">Cancelar</string>
+    <string name="transactions">Transacciones</string>
+    <string name="summary">Resumen</string>
+    <string name="total_expenses">Total de gastos: %s</string>
+    <string name="total_income">Total de ingresos: %s</string>
 </resources>
