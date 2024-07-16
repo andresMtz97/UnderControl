@@ -40,5 +40,18 @@
     <string name="summary">Summary</string>
     <string name="total_expenses">Total expenses: %s</string>
     <string name="total_income">Total income: %s</string>
-
+    <string name="summary_month">%s Summary</string>
+    <string name="transfers">Transfers</string>
+    <string name="edit_movement">Edit Movement</string>
+    <string name="add_movement">Add Movement</string>
+    <string name="hint_movement_description">Movement Description</string>
+    <string name="description">Description</string>
+    <string name="amount">Amount</string>
+    <string name="hint_amount">Movement Amount</string>
+    <string name="movement_date">Movement Date</string>
+    <string name="dateFormat">dd/mm/yyyy</string>
+    <string name="category">Category</string>
+    <string name="origin_account">Origin Account</string>
+    <string name="destination_account">Destination Account</string>
+    <string name="option_default">-- Select option --</string>
 </resources>
