@@ -73,4 +73,17 @@ interface UnderControlApi {
 
     @GET("/api/movimientos")
     fun getMovements(@Header("Authorization") jwt: String): Call<ArrayList<MovementDto>>
+
+    @POST("/api/movimientos/transaccion/{type}")
+    fun addTransaction(
+        @Header("Authorization") jwt: String,
+        @Path("type") type: String,
+        @Body movement: MovementDto
+    ): Call<ResponseDto<MovementDto>>
+
+    @POST("/api/movimientos/transferencia/")
+    fun addTransfer(
+        @Header("Authorization") jwt: String,
+        @Body movement: MovementDto
+    ): Call<ResponseDto<MovementDto>>
 }

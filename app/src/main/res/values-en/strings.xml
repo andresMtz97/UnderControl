@@ -49,9 +49,10 @@
     <string name="amount">Amount</string>
     <string name="hint_amount">Movement Amount</string>
     <string name="movement_date">Movement Date</string>
-    <string name="dateFormat">dd/mm/yyyy</string>
+    <string name="dateFormat">yyyy-MM-dd</string>
     <string name="category">Category</string>
     <string name="origin_account">Origin Account</string>
     <string name="destination_account">Destination Account</string>
     <string name="option_default">-- Select option --</string>
+    <string name="transfer_format"><![CDATA[%s -> %s]]></string>
 </resources>

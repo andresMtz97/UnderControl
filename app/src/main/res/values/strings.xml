@@ -49,9 +49,10 @@
     <string name="amount">Monto</string>
     <string name="hint_amount">Monto del movimiento</string>
     <string name="movement_date">Fecha del movimiento</string>
-    <string name="dateFormat">dd/mm/yyyy</string>
+    <string name="dateFormat">yyyy-MM-dd</string>
     <string name="category">Categoría</string>
     <string name="origin_account">Cuenta origen</string>
     <string name="destination_account">Cuenta Destino</string>
     <string name="option_default">-- Seleccione una opción --</string>
+    <string name="transfer_format"><![CDATA[%s -> %s]]></string>
 </resources>

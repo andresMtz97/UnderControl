@@ -9,5 +9,6 @@ data class MovementDto(
     @SerializedName("descripcion") var description: String,
     @SerializedName("cuenta_id") var accountId: Long,
     @SerializedName("transaccion") var transaction: TransactionDto? = null,
-    @SerializedName("transferencia") var transfer: TransferDto? = null
+    @SerializedName("transferencia") var transfer: TransferDto? = null,
+    @SerializedName("cuenta") val account: AccountDto? = null,
 )

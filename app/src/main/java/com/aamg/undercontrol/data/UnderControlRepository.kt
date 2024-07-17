@@ -45,6 +45,12 @@ class UnderControlRepository {
 
     fun getMovements(jwt: String): Call<ArrayList<MovementDto>> = api.getMovements(jwt)
 
+    fun addTransaction(jwt: String, type: String, movement: MovementDto): Call<ResponseDto<MovementDto>> =
+        api.addTransaction(jwt, type, movement)
+
+    fun addTransfer(jwt: String, movement: MovementDto): Call<ResponseDto<MovementDto>> =
+        api.addTransfer(jwt, movement)
+
     companion object {
         @Volatile
         private var instance: UnderControlRepository? = null

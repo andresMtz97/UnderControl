@@ -10,7 +10,10 @@ import com.aamg.undercontrol.data.UnderControlRepository
 import com.aamg.undercontrol.data.remote.model.AccountDto
 import com.aamg.undercontrol.data.remote.model.CategoryDto
 import com.aamg.undercontrol.data.remote.model.MovementDto
+import com.aamg.undercontrol.data.remote.model.ResponseDto
+import com.aamg.undercontrol.data.remote.model.ValidationError
 import com.aamg.undercontrol.utils.capitalize
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,6 +36,9 @@ class Home : ViewModel() {
 
     private val _month = MutableLiveData<String>()
     val month: LiveData<String> = _month
+
+    private val _errors = MutableLiveData<ArrayList<ValidationError>>()
+    val errors: LiveData<ArrayList<ValidationError>> = _errors
 
     init {
         viewModelScope.launch {
@@ -68,7 +74,9 @@ class Home : ViewModel() {
                         r: Response<ArrayList<MovementDto>>
                     ) {
                         Log.d("Homeviewmodel-movements", r.body().toString())
-                        _movements.postValue(r.body())
+                        if (r.isSuccessful && r.body() != null) {
+                            _movements.postValue(r.body())
+                        }
                         _loading.postValue(false)
                     }
 
@@ -83,6 +91,43 @@ class Home : ViewModel() {
 
     fun create(movement: MovementDto) {
         Log.d("Homeviewmodel-create", movement.toString())
+        _loading.postValue(true)
+        viewModelScope.launch {
+            val call: Call<ResponseDto<MovementDto>> = if (movement.transaction != null) {
+                val type = if (movement.transaction!!.type) "ingreso" else "egreso"
+                repository.addTransaction("Bearer $token", type, movement)
+            } else {
+                repository.addTransfer("Bearer $token", movement)
+            }
+            call.enqueue(object : Callback<ResponseDto<MovementDto>> {
+                override fun onResponse(
+                    p0: Call<ResponseDto<MovementDto>>,
+                    r: Response<ResponseDto<MovementDto>>
+                ) {
+                    Log.d("Homeviewmodel-create", r.body().toString())
+                    if (r.isSuccessful && r.body() != null) {
+                        val newList = ArrayList(_movements.value!!)
+                        newList.add(0, r.body()!!.data)
+                        Log.d("Homeviewmodel-create", newList.toString())
+                        _movements.postValue(newList)
+                    } else {
+                        val apiResponse = Gson().fromJson(
+                            r.errorBody()!!.string(),
+                            ResponseDto::class.java
+                        )
+                        apiResponse.errors?.let {
+                            _errors.postValue(it)
+                        }
+                    }
+                    _loading.postValue(false)
+                }
+
+                override fun onFailure(p0: Call<ResponseDto<MovementDto>>, t: Throwable) {
+                    Log.e("ERROR_CALL", t.message.toString())
+                }
+
+            })
+        }
     }
 
     fun update(movement: MovementDto, position: Int) {

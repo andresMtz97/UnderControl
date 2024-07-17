@@ -21,7 +21,7 @@ class DatePickerFragment(
         val c = Calendar.getInstance()
         val maxDate = c.timeInMillis
         if (date.isNotEmpty()) {
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
             val parsedDate = try {
                 dateFormat.parse(date)
             } catch (e: Exception) {

@@ -233,7 +233,7 @@ class MovementDialog(
         calendar.set(Calendar.DAY_OF_MONTH, day)
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.YEAR, year)
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         binding.etDate.setText(dateFormat.format(calendar.time))
     }
 }

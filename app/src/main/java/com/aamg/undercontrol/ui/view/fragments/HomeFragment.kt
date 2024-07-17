@@ -1,6 +1,7 @@
 package com.aamg.undercontrol.ui.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.aamg.undercontrol.data.remote.model.MovementDto
 import com.aamg.undercontrol.databinding.FragmentHomeBinding
 import com.aamg.undercontrol.ui.view.adapters.movement.MovementAdapter
 import com.aamg.undercontrol.ui.viewmodel.Home
+import com.aamg.undercontrol.utils.showErrorDialog
 import com.aamg.undercontrol.utils.toCurrency
 
 class HomeFragment : Fragment() {
@@ -79,12 +81,21 @@ class HomeFragment : Fragment() {
                 updateSummary(movements)
             }
         }
+
+        viewModel.errors.observe(viewLifecycleOwner) { validationErrors ->
+            var message = ""
+            validationErrors.forEach { validationError ->
+                message += validationError.messages.joinToString("\n")
+                message += "\n"
+            }
+            showErrorDialog(requireContext(), message)
+        }
     }
 
     private fun updateSummary(movements: ArrayList<MovementDto>) {
         var income = 0.0
         var expense = 0.0
-
+        Log.d("HomeFragment", "updateSummary: $movements")
         for (movement in movements) {
             if (movement.transaction !== null) {
                 if (movement.transaction!!.type) {
