@@ -27,7 +27,7 @@
         <action
             android:id="@+id/action_signInFragment_to_homeFragment"
             app:destination="@id/homeNavigation"
-            app:popUpTo="@id/signInFragment"
+            app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <navigation android:id="@+id/homeNavigation"
@@ -40,7 +40,7 @@
         <action
             android:id="@+id/action_global_signInFragment2"
             app:destination="@id/signInFragment"
-            app:popUpTo="@id/homeNavigation"
+            app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
     </navigation>
     <navigation android:id="@+id/categoriesNavigation"
