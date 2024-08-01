@@ -1,6 +1,5 @@
 package com.aamg.undercontrol.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,7 +19,7 @@ class SignIn: ViewModel() {
     private val repository = UnderControlRepository.getInstance()
 
     private val _isLoading = MutableLiveData<Boolean>()
-//    val isLoading: LiveData<Boolean> = _isLoading
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _success = MutableLiveData<Boolean>()
     val success: LiveData<Boolean> = _success
@@ -34,7 +33,6 @@ class SignIn: ViewModel() {
             val call = repository.signIn(data)
             call.enqueue(object: Callback<UserDto> {
                 override fun onResponse(p0: Call<UserDto>, response: Response<UserDto>) {
-                    _isLoading.postValue(false)
                     if (response.isSuccessful && response.body() != null) {
                         DataProvider.currentUser = response.body()
                         _success.postValue(true)
@@ -47,10 +45,12 @@ class SignIn: ViewModel() {
                             _error.postValue(it)
                         }
                     }
+                    _isLoading.postValue(false)
                 }
 
                 override fun onFailure(p0: Call<UserDto>, t: Throwable) {
-                    Log.e("SIGN_IN_FAILURE", t.message.toString())
+                     _error.postValue(t.message.toString())
+                    _isLoading.postValue(false)
                 }
 
             })

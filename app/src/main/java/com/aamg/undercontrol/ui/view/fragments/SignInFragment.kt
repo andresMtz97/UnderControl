@@ -57,6 +57,11 @@ class SignInFragment : Fragment() {
         viewModel.error.observe(viewLifecycleOwner) {
             showErrorDialog(requireContext(), it)
         }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.btnSignIn.isEnabled = !isLoading
+            binding.pbLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
     }
 
     private fun sendData() {

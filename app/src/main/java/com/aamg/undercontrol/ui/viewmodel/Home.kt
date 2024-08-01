@@ -40,6 +40,9 @@ class Home : ViewModel() {
     private val _errors = MutableLiveData<ArrayList<ValidationError>>()
     val errors: LiveData<ArrayList<ValidationError>> = _errors
 
+    private val _signout = MutableLiveData<Boolean>()
+    val signout: LiveData<Boolean> = _signout
+
     init {
         viewModelScope.launch {
             if (token != null) {
@@ -55,7 +58,6 @@ class Home : ViewModel() {
 
     fun onCreate() {
         _loading.postValue(true)
-
         val monthFormatter = DateTimeFormatter.ofPattern("MMMM")
         val month = monthFormatter.format(LocalDateTime.now()).capitalize()
         _month.postValue(month)
@@ -199,4 +201,11 @@ class Home : ViewModel() {
         })
     }
 
+    fun signOut() {
+        DataProvider.currentUser = null
+        DataProvider.accounts = null
+        DataProvider.incomeCategories = null
+        DataProvider.expenseCategories = null
+        _signout.postValue(true)
+    }
 }

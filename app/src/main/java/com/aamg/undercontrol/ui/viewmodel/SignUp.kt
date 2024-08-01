@@ -19,13 +19,16 @@ class SignUp : ViewModel() {
     private val repository = UnderControlRepository.getInstance()
 
     private val _isLoading = MutableLiveData<Boolean>()
-//    val isLoading: LiveData<Boolean> = _isLoading
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _successMsg = MutableLiveData<String>()
     val successMsg: LiveData<String> = _successMsg
 
     private val _errors = MutableLiveData<ArrayList<ValidationError>>()
     val errors: LiveData<ArrayList<ValidationError>> = _errors
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
 
     fun signUp(user: UserDto) {
         _isLoading.postValue(true)
@@ -38,7 +41,6 @@ class SignUp : ViewModel() {
                     response: retrofit2.Response<ResponseDto<UserDto>>
                 ) {
                     val apiResponse: ResponseDto<UserDto>?
-                    _isLoading.postValue(false)
 
                     // Response status 200
                     if (response.isSuccessful && response.body() != null) {
@@ -59,10 +61,11 @@ class SignUp : ViewModel() {
                     } else {
                         Log.i("API_RESPONSE", "Error!")
                     }
+                    _isLoading.postValue(false)
                 }
 
                 override fun onFailure(p0: Call<ResponseDto<UserDto>>, t: Throwable) {
-                    Log.e("SIGN_UP_FAILURE", t.message.toString())
+                    _error.postValue(t.message.toString())
                 }
             })
         }

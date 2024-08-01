@@ -10,9 +10,4 @@ object DataProvider {
     var accounts: ArrayList<AccountDto>? = null
     var incomeCategories: ArrayList<CategoryDto>? = null
     var expenseCategories: ArrayList<CategoryDto>? = null
-
-    var accountsNames: ArrayList<String>? = null
-    var incomeCategoriesNames: ArrayList<String>? = null
-    var expenseCategoriesNames: ArrayList<String>? = null
-
 }

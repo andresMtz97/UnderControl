@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aamg.undercontrol.R
 import com.aamg.undercontrol.data.remote.model.MovementDto
@@ -53,6 +54,7 @@ class HomeFragment : Fragment() {
     private fun initListeners() {
         binding.mbAddTransaction.setOnClickListener { displayEditMovement() }
         binding.mbAddTransfer.setOnClickListener { displayEditMovement(transaction = false) }
+        binding.ibSignOut.setOnClickListener { viewModel.signOut() }
     }
 
     private fun initObservers() {
@@ -89,6 +91,12 @@ class HomeFragment : Fragment() {
                 message += "\n"
             }
             showErrorDialog(requireContext(), message)
+        }
+
+        viewModel.signout.observe(viewLifecycleOwner) { signout ->
+            if (signout) {
+                findNavController().navigate(R.id.action_global_signInFragment2)
+            }
         }
     }
 

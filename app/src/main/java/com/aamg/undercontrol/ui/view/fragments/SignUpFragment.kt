@@ -72,6 +72,15 @@ class SignUpFragment : Fragment() {
             }
             showErrorDialog(requireContext(), message)
         }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.btnSubmit.isEnabled = !isLoading
+            binding.pbLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            showErrorDialog(requireContext(), error)
+        }
     }
 
     private fun sendData() {
